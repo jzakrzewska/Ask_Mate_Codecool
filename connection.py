@@ -1,9 +1,6 @@
 answers_file = "sample_data/answer.csv"
 question_file = "sample_data/question.csv"
 
-
-
-
 # id_index = 0
 # time_index = 1
 # view_index = 2
@@ -35,7 +32,7 @@ def read_dict_from_file(file_name, separator=','):
     except IOError:
         return {}
 
-
+#potrzebna jeszcze funkcja write/append file
 
 # def write_dict_to_file(file_name,dict separator=','):
 #

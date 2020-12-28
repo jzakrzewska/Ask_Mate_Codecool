@@ -1,5 +1,3 @@
-
-
 def sort_questions_from_greatest_id(data):
     int_list = []
     for d in data:
