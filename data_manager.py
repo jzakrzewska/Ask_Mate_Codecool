@@ -1,3 +1,5 @@
+import util
+
 answers_file = "sample_data/answer.csv"
 question_file = "sample_data/question.csv"
 
@@ -5,7 +7,7 @@ question_file = "sample_data/question.csv"
 
 
 # id_index = 0
-# time_index = 1
+time_index = 1
 # view_index = 2
 # vote_index = 3
 # question_index = 4
@@ -24,9 +26,13 @@ def read_dict_from_file(file_name, separator=','):
             listed_data = [element.replace("\n", "").replace('"', " ").split(separator) for element in lines]
             dict_keys = listed_data[0]
             dict_answers = listed_data[1:]
+
+            for sublist in dict_answers:
+                sublist[time_index] = util.convert_unix_to_date(int(sublist[time_index]))
             all_data = []
 
             for i in range(len(dict_answers)):
+
                 new_dict = dict(zip(dict_keys,dict_answers[i]))
                 all_data.append(new_dict)
 
@@ -34,7 +40,6 @@ def read_dict_from_file(file_name, separator=','):
 
     except IOError:
         return {}
-
 
 
 # def write_dict_to_file(file_name,dict separator=','):

@@ -1,8 +1,9 @@
+import time
+
 def sort_questions_from_greatest_id(data):
     int_list = []
     for text in data:
         text["id"] = int(text["id"])
-        text["submission_time"] = int(text["submission_time"])
         text["view_number"] = int(text["view_number"])
         text["vote_number"] = int(text["vote_number"])
         int_list.append(text)
@@ -10,3 +11,6 @@ def sort_questions_from_greatest_id(data):
 
     return sorted_data
 
+def convert_unix_to_date(data):
+    local_time = time.ctime(data)
+    return local_time
