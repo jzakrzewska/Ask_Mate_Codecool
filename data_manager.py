@@ -21,7 +21,7 @@ def read_dict_from_file(file_name, separator=','):
         with open(file_name, "r") as file:
             lines = file.readlines()
 
-            listed_data = [element.replace("\n", "").split(separator) for element in lines]
+            listed_data = [element.replace("\n", "").replace('"', " ").split(separator) for element in lines]
             dict_keys = listed_data[0]
             dict_answers = listed_data[1:]
             all_data = []
