@@ -14,3 +14,6 @@ def sort_questions_from_greatest_id(data):
 def convert_unix_to_date(data):
     local_time = time.ctime(data)
     return local_time
+
+def greatest_it():
+    return max([])
