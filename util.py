@@ -10,3 +10,5 @@ def sort_questions_from_greatest_id(data):
 
     return sorted_data
 
+def greatest_it():
+    return max([])
