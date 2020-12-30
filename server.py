@@ -34,7 +34,8 @@ def add_user_story_post():
     data["view number"] = 0
     data["id"] = util.greatest_id() + 1
     data["submission time"] = time.time()
-
+    data_manager.write_dict_to_file(question_file, data)
+    return redirect(url_for(list_questions))
 
 
 if __name__ == "__main__":

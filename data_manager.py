@@ -36,10 +36,9 @@ def read_dict_from_file(file_name, separator=','):
         return {}
 
 
+def write_dict_to_file(file_name,dict, separator=','):
 
-# def write_dict_to_file(file_name,dict separator=','):
-#
-#     with open(file_name, "w") as file:
-#         for record in dict:
-#             row = separator.join(record)
-#             file.write(row + "\n")
+    with open(file_name, "w") as file:
+        for record in dict:
+            row = separator.join(record)
+            file.write(row + "\n")
