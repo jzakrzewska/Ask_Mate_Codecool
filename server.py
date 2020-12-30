@@ -1,9 +1,12 @@
 from flask import Flask, render_template, url_for, request, redirect
 
+import time
 import data_manager
 import util
 
 app = Flask(__name__)
+answers_file = "sample_data/answer.csv"
+question_file = "sample_data/question.csv"
 
 
 @app.route("/")
@@ -29,7 +32,8 @@ def add_user_story_get():
 def add_user_story_post():
     data = dict(request.form)
     data["view number"] = 0
-
+    data["id"] = util.greatest_id() + 1
+    data["submission time"] = time.time()
 
 
 

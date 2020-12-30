@@ -1,3 +1,5 @@
+import data_manager
+
 def sort_questions_from_greatest_id(data):
     int_list = []
     for text in data:
@@ -10,5 +12,7 @@ def sort_questions_from_greatest_id(data):
 
     return sorted_data
 
-def greatest_it():
-    return max([])
+
+def greatest_id():
+    all_data = data_manager.read_dict_from_file()
+    return max([user["id"] for user in all_data])
