@@ -37,6 +37,22 @@ def add_user_story_post():
     data_manager.write_dict_to_file(question_file, data)
     return redirect(url_for(list_questions))
 
+@app.route('/question/<question_id>', methods=['GET'])
+def display_a_question(question_id):
+    question_dictionary_keys = data_manager.dictionary_keys_in_memory
+    answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+
+    question = next((item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id), False)
+    answers = next((item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['Question Id'] == question_id), False)
+
+    return render_template(
+        'question.html',
+        question=question,
+        answers=answers,
+        question_headers = question_dictionary_keys,
+        answers_headers = answers_dictionary_keys
+    )
+
 
 if __name__ == "__main__":
     app.run()

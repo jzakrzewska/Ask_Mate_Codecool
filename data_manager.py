@@ -15,7 +15,11 @@ time_index = 1
 # image_index = 6
 
 dictionary_keys_in_memory = ["id","submission_time","view_number","vote_number","title","message","image"]
-
+# in_memory_question_dictionary_keys = [
+#     'Question Id', 'Submission Time', 'View Number', 'Vote Number', 'Title', 'Message', 'Image',
+# ]
+#
+dictionary_keys_in_memory_answer = ['answer id', 'submission time', 'vote number', 'question id', 'message', 'image']
 
 def read_dict_from_file(file_name, separator=','):
 
