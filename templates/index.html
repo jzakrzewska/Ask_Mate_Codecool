@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Ask Mate</title>
+
+    <style>
+     #AskMateHeader {
+         background-color: lightsteelblue;
+         color: darkslategrey;
+         padding: 30px;
+         text-align: center;
+     }
+    </style>
 </head>
 <body>
-    <h1>Ask Mate</h1>
+
+    <h1 id= "AskMateHeader">Ask Mate</h1>
     <br>
+        <a href="{{ url_for("list_questions") }}">List questions</a>
+    <br>
+
 
 </body>
 </html>
