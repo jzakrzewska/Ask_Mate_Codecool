@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Ask_Mate_Codecool.iml" filepath="$PROJECT_DIR$/.idea/Ask_Mate_Codecool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AskMate.iml" filepath="$PROJECT_DIR$/.idea/AskMate.iml" />
     </modules>
   </component>
 </project>
