@@ -43,7 +43,7 @@ def display_a_question(question_id):
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
 
     question = next((item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id), False)
-    answers = next((item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['Question Id'] == question_id), False)
+    answers = next((item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['id'] == question_id), False)
 
     return render_template(
         'question.html',
