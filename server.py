@@ -37,7 +37,7 @@ def add_question_post():
             "title": request.form.get("title"),
             "message": request.form.get("message"),
             "image": ""}
-    print(data)
+
     data_manager.write_dict_to_file(question_file, data)
     return redirect(url_for("index"))
 
