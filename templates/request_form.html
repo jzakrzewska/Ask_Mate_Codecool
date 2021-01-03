@@ -6,7 +6,7 @@
 </head>
 <body>
         <h1>Ask new question!</h1>
-         <form>
+         <form action="{{ url_for("add_user_story_post") }}" method="post">
              <label for="title">Title</label><br>
              <input name="title" id="title" type="text" minlength="5" maxlength="50"> <br><br>
 
