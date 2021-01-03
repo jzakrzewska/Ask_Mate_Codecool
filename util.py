@@ -17,11 +17,11 @@ def convert_unix_to_date(data):
     local_time = time.ctime(data)
     return local_time
 
-# def greatest_id(data):
-#     questions = sort_questions_from_greatest_id(data)
-#     return max([question["id"] for question in questions])
+def greatest_id(file):
+    questions = sort_questions_from_greatest_id(file)
+    return max([question["id"] for question in questions])
 
 
-def greatest_id():
-    all_data = data_manager.read_dict_from_file()
-    return max([user["id"] for user in all_data])
+# def greatest_id(file):
+#     all_data = data_manager.read_dict_from_file(file)
+#     return max([user["id"] for user in all_data])

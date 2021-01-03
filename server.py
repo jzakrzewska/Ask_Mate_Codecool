@@ -24,18 +24,22 @@ def list_questions():
 
 
 @app.route("/add", methods=["GET"])
-def add_user_story_get():
+def add_question_get():
     return render_template("request_form.html")
 
 
 @app.route("/add", methods=["POST"])
-def add_user_story_post():
-    data = dict(request.form)
-    data["view number"] = 0
-    data["id"] = util.greatest_id() + 1
-    data["submission time"] = time.time()
+def add_question_post():
+    data = {"id": util.greatest_id(data_manager.read_dict_from_file(question_file)) + 1,
+            "submission_time": int(time.time()),
+            "view_number": 0,
+            "vote_number": 0,
+            "title": request.form.get("title"),
+            "message": request.form.get("message"),
+            "image": ""}
+    print(data)
     data_manager.write_dict_to_file(question_file, data)
-    return redirect(url_for(list_questions))
+    return redirect(url_for("index"))
 
 @app.route('/question/<question_id>', methods=['GET'])
 def display_a_question(question_id):

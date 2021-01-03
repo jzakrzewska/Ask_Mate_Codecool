@@ -46,9 +46,14 @@ def read_dict_from_file(file_name, separator=','):
         return {}
 
 #trzeba poprawić funkcję
-#def write_dict_to_file(file_name,dict, separator=','):
+def write_dict_to_file(file_name,dict, separator=','):
 
-    #with open(file_name, "w") as file:
-        #for record in dict:
-            #row = separator.join(record)
-            #file.write(row + "\n")
+    with open(file_name, "a") as file:
+        values = []
+        for key in dict:
+            row = dict[key]
+            values.append(str(row))
+        file.write(separator.join(values))
+# question_file = "sample_data/question.csv"
+# data = {'title': 'test 3', 'message': 'banana', 'view_number': 0, 'id': 4, 'submission_time': 1609687284.205643}
+# write_dict_to_file(question_file)
