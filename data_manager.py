@@ -14,7 +14,7 @@ time_index = 1
 # message_index = 5
 # image_index = 6
 
-dictionary_keys_in_memory = ["id","submission_time","view_number","vote_number","title","message","image"]
+dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
 # in_memory_question_dictionary_keys = [
 #     'Question Id', 'Submission Time', 'View Number', 'Vote Number', 'Title', 'Message', 'Image',
 # ]
@@ -45,8 +45,8 @@ def read_dict_from_file(file_name, separator=','):
     except IOError:
         return {}
 
-#trzeba poprawić funkcję
-def write_dict_to_file(file_name,dict, separator=','):
+
+def write_dict_to_file(file_name, dict, separator=','):
 
     with open(file_name, "a") as file:
         values = []
@@ -54,6 +54,4 @@ def write_dict_to_file(file_name,dict, separator=','):
             row = dict[key]
             values.append(str(row))
         file.write(separator.join(values))
-# question_file = "sample_data/question.csv"
-# data = {'title': 'test 3', 'message': 'banana', 'view_number': 0, 'id': 4, 'submission_time': 1609687284.205643}
-# write_dict_to_file(question_file)
+

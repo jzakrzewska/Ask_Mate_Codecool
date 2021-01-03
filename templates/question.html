@@ -10,7 +10,12 @@
     {{ question['message'] }}
     <br>
     <h2>Answers:</h2>
-    {{ answers['message'] }}
+    <ul>
+        {% for answer in answers %}
+            <li>{{ answer['message'] }}</li>
+        {% endfor %}
+    </ul>
+
 
 </body>
 </html>

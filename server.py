@@ -17,7 +17,7 @@ def index():
 
 @app.route("/list")
 def list_questions():
-    dictionary_keys = data_manager.dictionary_keys_in_memory
+    dictionary_keys = data_manager.dictionary_keys_in_memory_question
     questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
 
     return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
@@ -43,18 +43,18 @@ def add_question_post():
 
 @app.route('/question/<question_id>', methods=['GET'])
 def display_a_question(question_id):
-    question_dictionary_keys = data_manager.dictionary_keys_in_memory
+    question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
 
     question = next((item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id), False)
-    answers = next((item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['id'] == question_id), False)
+    answers = list(item for item in data_manager.read_dict_from_file(answers_file) if item['question_id'] == question_id)
 
     return render_template(
         'question.html',
         question=question,
         answers=answers,
-        question_headers = question_dictionary_keys,
-        answers_headers = answers_dictionary_keys
+        question_headers=question_dictionary_keys,
+        answers_headers=answers_dictionary_keys
     )
 
 
