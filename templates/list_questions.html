@@ -37,7 +37,7 @@
 <body>
     <h1 id="AskMateHeader">List of all questions</h1>
     <br>
-    <a href="{{ url_for("add_user_story_get") }}">Ask new question</a>
+    <a href="{{ url_for("add_user_story_get") }}">Ask new question</a><br>
 
     <table style="width:100%">
         <thead>
@@ -54,7 +54,9 @@
                 <tr>
                     {% for header in headers %}
                         <td>
-                            {% if header == "view number" %}
+                            {% if header == "id" %}
+                                <a href="{{ url_for("display_a_question", question_id=story["id"]) }}">{{ story[header] }}</a>
+                            {% elif header == "view number" %}
                                 {{ story[header] }} views
                             {% elif header == "vote number" %}
                                 {{ story[header] }} votes
