@@ -53,5 +53,5 @@ def write_dict_to_file(file_name, dict, separator=','):
         for key in dict:
             row = dict[key]
             values.append(str(row))
-        file.write(separator.join(values))
+        file.write(separator.join(values) + "\n")
 
