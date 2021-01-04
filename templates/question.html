@@ -3,6 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ question['title'] }}</title>
+    <style>
+        .button {
+          background-color: #4CAF50;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+        .small_button {
+            background-color: lightsteelblue;
+          border: none;
+          color:darkslategrey;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 10px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <h1>{{ question['title']}}</h1>
@@ -13,9 +39,10 @@
     <ul>
         {% for answer in answers %}
             <li>{{ answer['message'] }}</li>
+
         {% endfor %}
     </ul>
-
-
+    <br><a href="{{ url_for("add_new_answer_get", question_id=question["id"]) }}"><button class="small_button">add new answer</button></a><br>
+    <br><a href="{{ url_for("index") }}"><button class="button">Home page</button></a><br>
 </body>
 </html>
