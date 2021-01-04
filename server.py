@@ -25,7 +25,7 @@ def list_questions():
 
 @app.route("/add", methods=["GET"])
 def add_user_story_get():
-    return render_template("request_form.html")
+    return render_template("request_form.html", story=None)
 
 
 @app.route("/add", methods=["POST"])
