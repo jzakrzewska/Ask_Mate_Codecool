@@ -12,10 +12,12 @@
 </head>
 <body>
     {% if story == None %}
+         <h1>Ask new question!</h1>
     {% else %}
+         <h1>Edit question!</h1>
     {% endif %}
 
-        <h1>Ask new question!</h1>
+    {% if story == None %}
          <form action="{{ url_for("add_question_post") }}" method="post">
              <label for="title">Title</label><br>
              <input name="title" id="title" type="text" minlength="5" maxlength="50"> <br><br>
@@ -27,5 +29,20 @@
              <input type="submit" value="submit">
 
          </form>
+    {% else %}
+         <form action="{{ url_for("edit_question_post") }}" method="post">
+             <label for="title">Title</label><br>
+             <input name="title" id="title" type="text" minlength="5" maxlength="50" value="{{ story["title"] }}"> <br><br>
+
+
+             <label for="message">Message</label><br>
+             <textarea name="message" id="message" minlength="5" maxlength="5000">{{ story["message"] }}</textarea><br><br>
+         <br>
+             <input type="submit" value="Edit">
+
+            <input name="id" id="id" type="hidden">
+         </form>
+    {% endif %}
+
 </body>
 </html>

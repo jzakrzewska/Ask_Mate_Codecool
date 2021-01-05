@@ -25,7 +25,7 @@ def list_questions():
 
 @app.route("/add", methods=["GET"],)
 def add_question_get():
-    return render_template("request_form.html")
+    return render_template("request_form.html", question=None)
 
 
 @app.route("/add", methods=["POST"])
@@ -40,6 +40,25 @@ def add_question_post():
 
     data_manager.write_dict_to_file(question_file, data)
     return redirect(url_for("index"))
+
+
+@app.route('/edit/<question_id>', methods=["GET"])
+def edit_question_get(question_id):
+    if not question_id.isnumeric():
+        return redirect(url_for("index"))
+
+    question_id = int(question_id)
+    question = util.get_question(question_id)
+
+    if question is None:
+        return redirect(url_for("index"))
+
+    return render_template("request_form.html", question=question)
+
+@app.route("/edit", methods=["POST"])
+def edit_user_story_post():
+    pass
+
 
 @app.route('/question/<question_id>', methods=['GET'])
 def display_a_question(question_id):

@@ -2,6 +2,7 @@ import time
 
 import data_manager
 
+
 def sort_questions_from_greatest_id(data):
     int_list = []
     for text in data:
@@ -13,14 +14,24 @@ def sort_questions_from_greatest_id(data):
 
     return sorted_data
 
+
 def convert_unix_to_date(data):
     local_time = time.ctime(data)
     return local_time
+
 
 def greatest_id(file):
     questions = sort_questions_from_greatest_id(file)
     return max([question["id"] for question in questions])
 
+
+def get_question(data, question_id):
+    for text in data:
+        if text["id"] == question_id:
+
+            return text
+
+    return None
 
 # def greatest_id(file):
 #     all_data = data_manager.read_dict_from_file(file)
