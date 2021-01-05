@@ -25,11 +25,11 @@ def greatest_id(file):
     return max([question["id"] for question in questions])
 
 
-def get_question(data, question_id):
-    for text in data:
-        if text["id"] == question_id:
+def get_question(question_id):
+    for line in data_manager.read_dict_from_file(data_manager.question_file):
+        if line['id'] == question_id:
 
-            return text
+            return line
 
     return None
 
