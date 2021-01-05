@@ -61,7 +61,7 @@
                             {% elif header == "vote number" %}
                                 {{ story[header] }} votes
                             {% elif header == "title" %}
-                                <a href="{{ url_for("edit_question_get", question_it=story["id"]) }}"> {{ story[header] }}    </a>
+                                <a href="{{ url_for("edit_question_get", question_id=story["id"]) }}"> {{ story[header] }}    </a>
                             {% else %}
                                 {{ story[header] }}
                             {% endif %}
