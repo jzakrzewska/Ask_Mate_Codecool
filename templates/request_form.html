@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <title>Add new question!</title>
+    {% if story == None %}
+        <title> Add new question</title>
+    {% else %}
+        <title> Edit question</title>
+    {% endif %}
+
 </head>
 <body>
+    {% if story == None %}
+    {% else %}
+    {% endif %}
+
         <h1>Ask new question!</h1>
          <form action="{{ url_for("add_question_post") }}" method="post">
              <label for="title">Title</label><br>

@@ -23,7 +23,7 @@ def list_questions():
     return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
 
 
-@app.route("/add", methods=["GET"])
+@app.route("/add", methods=["GET"],)
 def add_question_get():
     return render_template("request_form.html")
 
