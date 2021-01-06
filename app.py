@@ -83,11 +83,11 @@ def display_a_question(question_id):
         answers_headers=answers_dictionary_keys
     )
 
+
 @app.route("/question/<question_id>/add_new_answer", methods=["GET"])
 def add_new_answer_get(question_id):
     question = next((item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id), False)
     return render_template("add_new_answer.html", question=question)
-
 
 
 @app.route("/question/<question_id>/add_new_answer", methods=["POST"])
@@ -103,6 +103,7 @@ def add_new_answer(question_id):
               }
     data_manager.write_dict_to_file(answers_file, answer)
     return redirect(url_for("display_a_question",question_id=question_id))
+
 
 if __name__ == "__main__":
     app.run()
