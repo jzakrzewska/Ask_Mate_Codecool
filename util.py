@@ -27,7 +27,7 @@ def greatest_id(file):
 
 def get_question(question_id):
     for line in data_manager.read_dict_from_file(data_manager.question_file):
-        if line['id'] == question_id:
+        if int(line['id']) == int(question_id):
 
             return line
 

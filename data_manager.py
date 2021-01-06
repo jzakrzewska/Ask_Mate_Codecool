@@ -55,3 +55,11 @@ def write_dict_to_file(file_name, dict, separator=','):
             values.append(str(row))
         file.write(separator.join(values) + "\n")
 
+
+def update_dic_in_file(file_name, dict, separator=","):
+    with open(file_name, "r") as file:
+        for row in file.readlines():
+            row = row.split(",")
+            if row[0] == dict["id"]:
+                row[4] = dict["title"]
+                row[5] = dict["message"]

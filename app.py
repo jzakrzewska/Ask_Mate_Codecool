@@ -44,21 +44,26 @@ def add_question_post():
 
 @app.route('/edit/<question_id>', methods=["GET"])
 def edit_question_get(question_id):
-    if not question_id.isnumeric():
-        return redirect(url_for("index"))
 
     question_id = int(question_id)
     question = util.get_question(question_id)
-
+    print(question)
     if question is None:
         return redirect(url_for("index"))
 
     return render_template("request_form.html", question=question)
 
 
-@app.route("/edit", methods=["POST"])
-def edit_user_story_post():
-    pass
+@app.route("/edit/<question_id>", methods=["POST"])
+def edit_question_post(question_id):
+    question_id = int(question_id)
+    question = util.get_question(question_id)
+
+    question["title"] = request.form.get("title")
+    question["message"] = request.form.get("message")
+
+    data_manager.update_dic_in_file(question_file, question)
+    return redirect(url_for("list_questions"))
 
 
 @app.route('/question/<question_id>', methods=['GET'])
