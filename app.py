@@ -61,7 +61,7 @@ def edit_question_post(question_id):
 
     question["title"] = request.form.get("title")
     question["message"] = request.form.get("message")
-
+    question["submission_time"] = int(time.time())
     data_manager.update_dic_in_file(question_file, question)
     return redirect(url_for("list_questions"))
 
