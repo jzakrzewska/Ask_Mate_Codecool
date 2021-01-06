@@ -38,7 +38,7 @@ def add_question_post():
             "message": request.form.get("message"),
             "image": ""}
 
-    data_manager.write_dict_to_file(question_file, data)
+    data_manager.add_dict_to_file(question_file, data)
     return redirect(url_for("index"))
 
 @app.route('/question/<question_id>', methods=['GET'])
@@ -56,7 +56,24 @@ def display_a_question(question_id):
         answers=answers,
         question_headers=question_dictionary_keys,
         answers_headers=answers_dictionary_keys
-    )
+        )
+
+# @app.route('/question/<question_id>/delete', methods=["GET"])
+# def delete_a_question_get(question_id):
+
+
+@app.route('/question/<question_id>/delete', methods=["GET"])
+def delete_a_question_get(question_id):
+    dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    questions = data_manager.read_dict_from_file(data_manager.question_file)
+    question_to_delete = next((item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id), False)
+    print(question_to_delete)
+    questions_after_deletion = list(d for d in questions if d != question_to_delete)
+    print(questions_after_deletion)
+    data_manager.write_data_to_file(data_manager.question_file, questions_after_deletion)
+    questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
+
+    return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
 
 @app.route("/question/<question_id>/add_new_answer", methods=["GET"])
 def add_new_answer_get(question_id):
@@ -76,8 +93,8 @@ def add_new_answer(question_id):
               "message": request.form.get("message"),
               "image": ""
               }
-    data_manager.write_dict_to_file(answers_file, answer)
-    return redirect(url_for("display_a_question",question_id=question_id))
+    data_manager.add_dict_to_file(answers_file, answer)
+    return redirect(url_for("display_a_question", question_id=question_id))
 
 if __name__ == "__main__":
     app.run()

@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 import data_manager
 
@@ -16,6 +17,13 @@ def sort_questions_from_greatest_id(data):
 def convert_unix_to_date(data):
     local_time = time.ctime(data)
     return local_time
+
+def convert_date_to_unix(data):
+    time = datetime.strptime(data, "%a %b %d %H:%M:%S %Y")
+    print(time)
+    unix_time = int(datetime.timestamp(time))
+
+    return unix_time
 
 def greatest_id(file):
     questions = sort_questions_from_greatest_id(file)

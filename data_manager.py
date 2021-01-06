@@ -46,7 +46,7 @@ def read_dict_from_file(file_name, separator=','):
         return {}
 
 
-def write_dict_to_file(file_name, dict, separator=','):
+def add_dict_to_file(file_name, dict, separator=','):
 
     with open(file_name, "a") as file:
         values = []
@@ -54,4 +54,16 @@ def write_dict_to_file(file_name, dict, separator=','):
             row = dict[key]
             values.append(str(row))
         file.write(separator.join(values) + "\n")
+
+def write_data_to_file(file_name,data,separator=","):
+
+    with open(file_name, "w") as file:
+        headers = (separator.join(data[0].keys()))
+        file.write(headers + "\n")
+        for dictionary in data:
+
+            dictionary['submission_time'] = str(util.convert_date_to_unix(dictionary['submission_time']))
+            row = separator.join(dictionary.values())
+            file.write(row + "\n")
+
 
