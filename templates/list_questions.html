@@ -16,6 +16,18 @@
           margin: 4px 2px;
           cursor: pointer;
         }
+        .small_button {
+            background-color: lightsteelblue;
+          border: none;
+          color:darkslategrey;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 10px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
         #AskMateHeader {
             background-color: lightsteelblue;
             color: darkslategrey;
@@ -35,10 +47,7 @@
     </style>
 </head>
 <body>
-    <h1 id="AskMateHeader">List of all questions</h1>
-    <br>
-    <a href="{{ url_for("add_question_get") }}">Ask new question</a><br>
-
+    <h1 id="AskMateHeader">List of all questions</h1><br>
     <table style="width:100%">
         <thead>
             <tr>
@@ -69,6 +78,7 @@
             {% endfor %}
         </tbody>
     </table>
+    <br><a href="{{ url_for("add_question_get") }}"><button class="small_button">add new question</button></a><br>
     <br><a href="{{ url_for("index") }}"><button class="button">Home page</button></a><br>
 
 </body>

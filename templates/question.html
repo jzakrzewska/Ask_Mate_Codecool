@@ -28,6 +28,12 @@
           margin: 4px 2px;
           cursor: pointer;
         }
+        #AskMateHeader {
+            background-color: lightsteelblue;
+            color: darkslategrey;
+            padding: 30px;
+            text-align: center;
+        }
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
@@ -41,11 +47,11 @@
     </style>
 </head>
 <body>
-    <h1>{{ question['title']}}</h1>
+    <h1 id="AskMateHeader">{{ question['title']}}</h1>
     <br>
     {{ question['message'] }}
     <br>
-    <h2>Answers:</h2>
+    <h2 id="AskMateHeader">Answers:</h2>
 
         <table style="width:100%">
         <thead>
@@ -78,7 +84,6 @@
             {% endfor %}
         </tbody>
     </table>
-
     <br><a href="{{ url_for("add_new_answer_get", question_id=question["id"]) }}"><button class="small_button">add new answer</button></a><br>
     <br><a href="{{ url_for("delete_a_question_get", question_id=question["id"]) }}"><button class="small_button">delete question</button></a><br>
     <br><a href="{{ url_for("index") }}"><button class="button">Home page</button></a><br>

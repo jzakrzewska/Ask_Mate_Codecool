@@ -10,7 +10,30 @@
          padding: 30px;
          text-align: center;
      }
-
+     .small_button {
+            background-color: lightsteelblue;
+          border: none;
+          color:darkslategrey;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 10px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+     .button {
+          background-color: #4CAF50;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -23,9 +46,9 @@
              <label for="message">Message</label><br>
              <textarea name="message" id="message" minlength="5" maxlength="5000" ></textarea><br><br>
 
-             <p><input type="submit" value="submit question"></p>
+             <p><input type="submit" value="submit question" class="small_button"></p>
              </form>
-
+        <br><a href="{{ url_for("index") }}"><button class="button">Home page</button></a><br>
 
 
 
