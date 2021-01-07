@@ -50,7 +50,7 @@
         <table style="width:100%">
         <thead>
             <tr>
-                {% for header in answers_headers if not header == 'question_id' %}
+                {% for header in answers_headers if header != 'question_id' and header != 'id' %}
                     <th>
                         {{ header }}
                     </th>
@@ -60,7 +60,7 @@
             <tbody>
             {% for answer in answers %}
                 <tr>
-                    {% for header in answers_headers if not header == 'question_id' %}
+                    {% for header in answers_headers if header != 'question_id' and header != 'id' %}
                         <td>
                             {% if header == "vote number" %}
                                 {{ answer[header] }} votes

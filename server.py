@@ -110,14 +110,18 @@ def delete_an_answer(answer_id,question_id):
 
 
 @app.route('/answer/<answer_id>/vote_up', methods=['GET'])
-def vote_up_answer(answer_id):
+def vote_up_answer(answer_id, question_id):
     answers = data_manager.read_dict_from_file(data_manager.answers_file)
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
 
     answer = next((item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['id'] == answer_id), False)
     answer['vote_number'] = answer['vote_number'] + 1
 
+    answers_after_deletion
+
     data_manager.add_data_to_file(data_manager.answers_file, answer)
+
+    return redirect(url_for('display_a_question', question_id=question_id))
 
 if __name__ == "__main__":
     app.run()
