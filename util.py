@@ -20,7 +20,6 @@ def convert_unix_to_date(data):
 
 def convert_date_to_unix(data):
     time = datetime.strptime(data, "%a %b %d %H:%M:%S %Y")
-    print(time)
     unix_time = int(datetime.timestamp(time))
 
     return unix_time
