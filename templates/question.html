@@ -28,6 +28,16 @@
           margin: 4px 2px;
           cursor: pointer;
         }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+        th, td {
+            padding: 15px;
+            }
+        th {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -36,12 +46,36 @@
     {{ question['message'] }}
     <br>
     <h2>Answers:</h2>
-    <ul>
-        {% for answer in answers %}
-            <li>{{ answer['message'] }}<a href="{{ url_for("delete_an_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">delete answer</button></a></li>
 
-        {% endfor %}
-    </ul>
+        <table style="width:100%">
+        <thead>
+            <tr>
+                {% for header in answers_headers if not header == 'question_id' %}
+                    <th>
+                        {{ header }}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+            <tbody>
+            {% for answer in answers %}
+                <tr>
+                    {% for header in answers_headers if not header == 'question_id' %}
+                        <td>
+                            {% if header == "vote number" %}
+                                {{ answer[header] }} votes
+                            {% else %}
+                                {{ answer[header] }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                    <td>
+                        <a href="{{ url_for("delete_an_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">delete answer</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <br><a href="{{ url_for("add_new_answer_get", question_id=question["id"]) }}"><button class="small_button">add new answer</button></a><br>
     <br><a href="{{ url_for("delete_a_question_get", question_id=question["id"]) }}"><button class="small_button">delete question</button></a><br>
