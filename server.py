@@ -45,13 +45,13 @@ def add_question_post():
 def display_a_question(question_id):
     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+    questions = data_manager.read_dict_from_file(data_manager.question_file)
+    answers = data_manager.read_dict_from_file(data_manager.answers_file)
 
-    question = next(
-        (item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id),
-        False)
+    question = util.finding_by_id(questions, 'id', question_id)
 
     answers = list(
-        item for item in data_manager.read_dict_from_file(answers_file) if item['question_id'] == question_id)
+        item for item in answers if item['question_id'] == question_id)
 
     return render_template(
         'question.html',
@@ -68,9 +68,9 @@ def delete_a_question_get(question_id):
     questions = data_manager.read_dict_from_file(data_manager.question_file)
     answers = data_manager.read_dict_from_file(data_manager.answers_file)
 
-    question_to_delete = next((item for item in questions if item['id'] == question_id), False)
+    question_to_delete = util.finding_by_id(questions, 'id', question_id)
 
-    questions_after_deletion = list(d for d in questions if d != question_to_delete)
+    questions_after_deletion = list(item for item in questions if item != question_to_delete)
     answers_after_deletion = list(item for item in answers if item['question_id'] != question_id)
 
     data_manager.write_data_to_file(data_manager.question_file, questions_after_deletion)
@@ -91,10 +91,6 @@ def add_new_answer_get(question_id):
 
 @app.route("/question/<question_id>/add_new_answer", methods=["POST"])
 def add_new_answer(question_id):
-    question = next(
-        (item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id),
-        False)
-
     answer = {"id": util.greatest_id(data_manager.read_dict_from_file(answers_file)) + 1,
               "submission_time": int(time.time()),
               "vote_number": 0,
@@ -118,35 +114,13 @@ def delete_an_answer(answer_id, question_id):
 
 @app.route('/answer/<answer_id>/vote_up/<question_id>', methods=['GET'])
 def vote_up_answer(answer_id, question_id):
-    answers = data_manager.read_dict_from_file(data_manager.answers_file)
-
-    answer = next(
-        (item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['id'] == answer_id),
-        False)
-    answer['vote_number'] = str(int(answer['vote_number']) + 1)
-    answer['submission_time'] = util.convert_date_to_unix(answer['submission_time'])
-
-    answers_after_deletion = list(d for d in answers if d["id"] != answer_id)
-    data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
-
-    data_manager.add_dict_to_file(data_manager.answers_file, answer)
+    util.voting_answer(answer_id, '+')
 
     return redirect(url_for('display_a_question', question_id=question_id))
 
 @app.route('/answer/<answer_id>/vote_down/<question_id>', methods=['GET'])
 def vote_down_answer(answer_id, question_id):
-    answers = data_manager.read_dict_from_file(data_manager.answers_file)
-
-    answer = next(
-        (item for item in data_manager.read_dict_from_file(data_manager.answers_file) if item['id'] == answer_id),
-        False)
-    answer['vote_number'] = str(int(answer['vote_number']) - 1)
-    answer['submission_time'] = util.convert_date_to_unix(answer['submission_time'])
-
-    answers_after_deletion = list(d for d in answers if d["id"] != answer_id)
-    data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
-
-    data_manager.add_dict_to_file(data_manager.answers_file, answer)
+    util.voting_answer(answer_id, '-')
 
     return redirect(url_for('display_a_question', question_id=question_id))
 

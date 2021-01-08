@@ -32,3 +32,26 @@ def greatest_id(file):
 # def greatest_id(file):
 #     all_data = data_manager.read_dict_from_file(file)
 #     return max([user["id"] for user in all_data])
+
+
+def finding_by_id(file, id_in_file, given_id):
+    return next((item for item in file if item[id_in_file] == given_id), False)
+
+
+def voting_answer(answer_id, operator):
+    answers = data_manager.read_dict_from_file(data_manager.answers_file)
+    answer = finding_by_id(answers, 'id', answer_id)
+
+    answers_after_deletion = list(item for item in answers if item["id"] != answer_id)
+    data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
+
+    if operator == '+':
+        answer['vote_number'] = str(int(answer['vote_number']) + 1)
+    elif operator == '-':
+        answer['vote_number'] = str(int(answer['vote_number']) - 1)
+    else:
+        raise ValueError('Invalid operator, try + or -')
+
+    answer['submission_time'] = convert_date_to_unix(answer['submission_time'])
+
+    data_manager.add_dict_to_file(data_manager.answers_file, answer)
