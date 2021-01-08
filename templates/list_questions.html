@@ -74,6 +74,10 @@
                             {% endif %}
                         </td>
                     {% endfor %}
+                    <td>
+                        <a href="{{ url_for("vote_question_up", question_id=story["id"]) }}"><button class="small_button">vote up</button></a>
+                        <a href="{{ url_for("vote_question_down", question_id=story["id"]) }}"><button class="small_button">vote down</button></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

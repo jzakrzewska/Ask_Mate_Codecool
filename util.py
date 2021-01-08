@@ -55,3 +55,24 @@ def voting_answer(answer_id, operator):
     answer['submission_time'] = convert_date_to_unix(answer['submission_time'])
 
     data_manager.add_dict_to_file(data_manager.answers_file, answer)
+
+
+def voting_question(question_id,operator):
+    questions = data_manager.read_dict_from_file(data_manager.question_file)
+    question = finding_by_id(questions, 'id', question_id)
+
+    questions_after_voting = list(item for item in questions if item != question)
+    data_manager.write_data_to_file(data_manager.question_file, questions_after_voting)
+
+    if operator == '+':
+        question['vote_number'] = str(int(question['vote_number']) + 1)
+    elif operator == '-':
+        question['vote_number'] = str(int(question['vote_number']) - 1)
+    else:
+        raise ValueError('Invalid operator, try + or -')
+
+    question['submission_time'] = convert_date_to_unix(question['submission_time'])
+
+    data_manager.add_dict_to_file(data_manager.question_file, question)
+
+    questions = sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))

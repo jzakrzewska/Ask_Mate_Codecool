@@ -118,11 +118,25 @@ def vote_up_answer(answer_id, question_id):
 
     return redirect(url_for('display_a_question', question_id=question_id))
 
+
 @app.route('/answer/<answer_id>/vote_down/<question_id>', methods=['GET'])
 def vote_down_answer(answer_id, question_id):
     util.voting_answer(answer_id, '-')
 
     return redirect(url_for('display_a_question', question_id=question_id))
+
+
+@app.route('/question/<question_id>/vote_up', methods=['GET'])
+def vote_question_up(question_id):
+    util.voting_question(question_id, '+')
+
+    return redirect(url_for('list_questions'))
+
+@app.route('/question/<question_id>/vote_down', methods=['GET'])
+def vote_question_down(question_id):
+    util.voting_question(question_id, '-')
+
+    return redirect(url_for('list_questions'))
 
 
 if __name__ == "__main__":
