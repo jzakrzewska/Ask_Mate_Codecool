@@ -13,4 +13,5 @@ id,submission_time,vote_number,question_id,message,image
 3,1609778016,1,2,nie wiem co to znaczy,
 13,1610116887,1,9,great question,
 14,1610119448,3,10,good test bro,
-15,1610182559,-10,11,Stupid question!,
+15,1610182559,1,11,Stupid question!,
+16,1610441954,0,11,stupid answer,

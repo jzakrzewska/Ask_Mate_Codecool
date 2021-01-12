@@ -63,6 +63,7 @@ def write_data_to_file(file_name,data,separator=","):
         for dictionary in data:
 
             dictionary['submission_time'] = str(util.convert_date_to_unix(dictionary['submission_time']))
+            dictionary["view_number"] = str(dictionary["view_number"])
             row = separator.join(dictionary.values())
             file.write(row + "\n")
 

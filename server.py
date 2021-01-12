@@ -9,12 +9,8 @@ answers_file = "sample_data/answer.csv"
 question_file = "sample_data/question.csv"
 
 
+
 @app.route("/")
-def index():
-    return render_template("index.html")
-
-
-@app.route("/list")
 def list_questions():
     dictionary_keys = data_manager.dictionary_keys_in_memory_question
     questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
@@ -38,7 +34,7 @@ def add_question_post():
             "image": ""}
 
     data_manager.add_dict_to_file(question_file, data)
-    return redirect(url_for("index"))
+    return redirect(url_for("list_questions"))
 
 
 @app.route('/question/<question_id>', methods=['GET'])
@@ -52,6 +48,8 @@ def display_a_question(question_id):
 
     answers = list(
         item for item in answers if item['question_id'] == question_id)
+    question["view_number"] = int(question.get("view_number", 0)) + 1
+    data_manager.write_data_to_file(data_manager.question_file, questions)
 
     return render_template(
         'question.html',
