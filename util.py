@@ -7,9 +7,7 @@ def sort_questions_from_greatest_id(data):
     int_list = []
     for text in data:
         text["id"] = int(text["id"])
-
         int_list.append(text)
-    print(data)
     sorted_data = sorted(int_list, key=lambda d: d["id"], reverse=True)
 
     return sorted_data
@@ -18,7 +16,6 @@ def sort_questions_from_smallest_id(data):
     int_list = []
     for text in data:
         text["id"] = int(text["id"])
-
         int_list.append(text)
     sorted_data = sorted(int_list, key=lambda d: d["id"], reverse=False)
 
@@ -28,7 +25,6 @@ def sort_questions_from_greatest_view(data):
     int_list = []
     for text in data:
         text["view_number"] = int(text["view_number"])
-
         int_list.append(text)
     sorted_data = sorted(int_list, key=lambda d: d["view_number"], reverse=True)
 
@@ -38,7 +34,6 @@ def sort_questions_from_smallest_view(data):
     int_list = []
     for text in data:
         text["view_number"] = int(text["view_number"])
-
         int_list.append(text)
     sorted_data = sorted(int_list, key=lambda d: d["view_number"], reverse=False)
 
@@ -49,14 +44,19 @@ def sort_questions_from_greatest_vote(data):
     int_list = []
     for text in data:
         text["vote_number"] = int(text["vote_number"])
-
         int_list.append(text)
     sorted_data = sorted(int_list, key=lambda d: d["vote_number"], reverse=True)
 
     return sorted_data
 
 def sort_questions_from_smallest_vote(data):
+    int_list = []
+    for text in data:
+        text["vote_number"] = int(text["vote_number"])
+        int_list.append(text)
+    sorted_data = sorted(int_list, key=lambda d: d["vote_number"], reverse=False)
 
+    return sorted_data
 
     return sorted_data
 
