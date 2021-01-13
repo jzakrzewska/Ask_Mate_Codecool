@@ -9,6 +9,7 @@ def sort_questions_from_greatest_id(data):
         text["id"] = int(text["id"])
 
         int_list.append(text)
+    print(data)
     sorted_data = sorted(int_list, key=lambda d: d["id"], reverse=True)
 
     return sorted_data
@@ -55,14 +56,21 @@ def sort_questions_from_greatest_vote(data):
     return sorted_data
 
 def sort_questions_from_smallest_vote(data):
-    int_list = []
-    for text in data:
-        text["vote_number"] = int(text["vote_number"])
 
-        int_list.append(text)
-    sorted_data = sorted(int_list, key=lambda d: d["vote_number"], reverse=False)
 
     return sorted_data
+
+def sort_questions_title_ascending(data):
+    sorted_questions = sorted(data, key=lambda k: k["title"])
+
+    return sorted_questions
+
+def sort_questions_title_descending(data):
+
+    sorted_questions = sorted(data, key=lambda k: k["title"], reverse=True)
+
+    return sorted_questions
+
 
 def convert_unix_to_date(data):
     local_time = time.ctime(data)
