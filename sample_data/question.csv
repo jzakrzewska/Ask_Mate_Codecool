@@ -6,4 +6,4 @@ id,submission_time,view_number,vote_number,title,message,image
 9,1610041972,1,0,How to upload a file to flask app?,please search for file upload flask form in google,
 4,1609689201,10,1,Test 5,a teraz z tym czasem to juz mam nadzieje bedzie naprawde okej,
 10,1610118040,3,4,Testing,testing test,
-11,1610447942,1,0,How to increase view number?,use dictionary.get( key 0) + 1,
+11,1610447942,2,0,How to increase view number?,use dictionary.get( key 0) + 1,

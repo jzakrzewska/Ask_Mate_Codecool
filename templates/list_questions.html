@@ -48,7 +48,34 @@
 </head>
 <body>
 <h1 id="AskMateHeader">Ask Mate<br></h1><h1 id= "AskMateHeader" >List of all questions</h1><br>
+
+        <label for="view_number">sort by view number:</label><br>
+            <select name="view_number" id="view_number">
+                <option value="Ascending" selected>Ascending</option>
+                <option value="Descending">Descending</option>
+            </select><br>
+
+        <label for="vote_number">sort by vote number:</label><br>
+            <select name="vote_number" id="vote_number">
+                <option value="Ascending" selected>Ascending</option>
+                <option value="Descending">Descending</option>
+            </select><br>
+
+
+        <label for="submission_time">sort by submission time:</label><br>
+            <select name="submission_time" id="submission_time">
+                <option value="Ascending" selected>Ascending</option>
+                <option value="Descending">Descending</option>
+            </select><br>
+
+        <label for="title">sort by title:</label><br>
+            <select name="title" id="title">
+                <option value="Ascending" selected>A-Z</option>
+                <option value="Descending">Z-A</option>
+            </select><br>
+
     <table style="width:100%">
+
         <thead>
             <tr>
                 {% for header in headers %}
