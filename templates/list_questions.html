@@ -92,9 +92,9 @@
                         <td>
                             {% if header == "id" %}
                                 <a href="{{ url_for("display_a_question", question_id=story["id"]) }}">{{ story[header] }}</a>
-                            {% elif header == "view number" %}
+                            {% elif header == "view_number" %}
                                 {{ story[header] }} views
-                            {% elif header == "vote number" %}
+                            {% elif header == "vote_number" %}
                                 {{ story[header] }} votes
                             {% else %}
                                 {{ story[header] }}

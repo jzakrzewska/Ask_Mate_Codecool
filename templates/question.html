@@ -68,7 +68,7 @@
                 <tr>
                     {% for header in answers_headers if header != 'question_id' and header != 'id' %}
                         <td>
-                            {% if header == "vote number" %}
+                            {% if header == "vote_number" %}
                                 {{ answer[header] }} votes
                             {% else %}
                                 {{ answer[header] }}

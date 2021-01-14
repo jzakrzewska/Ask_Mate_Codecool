@@ -5,5 +5,8 @@ id,submission_time,view_number,vote_number,title,message,image
 8,1609782616,1,0,Lazy css learner,how to lear css style without spending too much it?,
 9,1610041972,1,0,How to upload a file to flask app?,please search for file upload flask form in google,
 4,1609689201,10,1,Test 5,a teraz z tym czasem to juz mam nadzieje bedzie naprawde okej,
-10,1610118040,3,4,Testing,testing test,
+10,1610118040,4,4,Testing,testing test,
 11,1610447942,2,0,How to increase view number?,use dictionary.get( key 0) + 1,
+12,1610619339,1,0,photo upload try,another try,salto.jpg
+13,1610619499,0,0,just another stupid try,will it work or not?,salto.jpg
+14,1610619628,0,0,bllalala,vvvvdddd,images/salto.jpg

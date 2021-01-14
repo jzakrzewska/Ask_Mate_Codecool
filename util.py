@@ -58,7 +58,6 @@ def sort_questions_from_smallest_vote(data):
 
     return sorted_data
 
-    return sorted_data
 
 def sort_questions_title_ascending(data):
     sorted_questions = sorted(data, key=lambda k: k["title"])
@@ -85,11 +84,6 @@ def convert_date_to_unix(data):
 def greatest_id(file):
     questions = sort_questions_from_greatest_id(file)
     return max([question["id"] for question in questions])
-
-
-# def greatest_id(file):
-#     all_data = data_manager.read_dict_from_file(file)
-#     return max([user["id"] for user in all_data])
 
 
 def finding_by_id(file, id_in_file, given_id):

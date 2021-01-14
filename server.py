@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 
+import os
 import time
 import data_manager
 import util
@@ -23,18 +24,34 @@ def add_question_get():
     return render_template("request_form.html")
 
 
+
+app.config["IMAGE_UPLOADS"] = "/Users/admin/cc_projects/Ask_Mate_Codecool/images"
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
+
+
 @app.route("/add", methods=["POST"])
 def add_question_post():
-    data = {"id": util.greatest_id(data_manager.read_dict_from_file(question_file)) + 1,
-            "submission_time": int(time.time()),
-            "view_number": 0,
-            "vote_number": 0,
-            "title": request.form.get("title"),
-            "message": request.form.get("message"),
-            "image": ""}
+    if request.files:
+        image = request.files["image"]
+        image.save(os.path.join("/Users/admin/cc_projects/Ask_Mate_Codecool/images", image.filename))
+        image_name = "images/" + image.filename
+        print("image saved")
 
-    data_manager.add_dict_to_file(question_file, data)
+        data = {"id": util.greatest_id(data_manager.read_dict_from_file(question_file)) + 1,
+                "submission_time": int(time.time()),
+                "view_number": 0,
+                "vote_number": 0,
+                "title": request.form.get("title"),
+                "message": request.form.get("message"),
+                "image": image_name}
+
+        data_manager.add_dict_to_file(question_file, data)
+
     return redirect(url_for("list_questions"))
+
+@app.route("/add/upload-image", methods=["GET", "POST"])
+def upload_image():
+    return render_template("request_form.html")
 
 
 @app.route('/question/<question_id>', methods=['GET'])
