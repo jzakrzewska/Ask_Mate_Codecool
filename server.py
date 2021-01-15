@@ -5,15 +5,21 @@ import time
 import data_manager
 import util
 
-app = Flask(__name__)
-answers_file = "sample_data/answer.csv"
-question_file = "sample_data/question.csv"
+#app = Flask(__name__)
+#answers_file = "sample_data/answer.csv"
+#question_file = "sample_data/question.csv"
 
+#dodać folder static
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+TARGET_FOLDER = 'static/images/'
+UPLOAD_FOLDER = os.path.join(APP_ROOT, TARGET_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route("/")
 def list_questions():
     dictionary_keys = data_manager.dictionary_keys_in_memory_question
+
     questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
 
     return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
