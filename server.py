@@ -5,9 +5,9 @@ import time
 import data_manager
 import util
 
-#app = Flask(__name__)
-#answers_file = "sample_data/answer.csv"
-#question_file = "sample_data/question.csv"
+app = Flask(__name__)
+answers_file = "sample_data/answer.csv"
+question_file = "sample_data/question.csv"
 
 #dodać folder static
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))

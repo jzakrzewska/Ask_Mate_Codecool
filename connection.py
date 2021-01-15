@@ -1,42 +1,52 @@
-answers_file = "sample_data/answer.csv"
-question_file = "sample_data/question.csv"
+# Creates a decorator to handle the database connection/cursor opening/closing.
+# Creates the cursor with RealDictCursor, thus it returns real dictionaries, where the column names are the keys.
+import os
 
-# id_index = 0
-# time_index = 1
-# view_index = 2
-# vote_index = 3
-# question_index = 4
-# message_index = 5
-# image_index = 6
-
-dictionary_keys_in_memory = ["id","submission_time","view_number","vote_number","title","message","image"]
+import psycopg2
+import psycopg2.extras
 
 
-def read_dict_from_file(file_name, separator=','):
+def get_connection_string():
+    # setup connection string
+    # to do this, please define these environment variables first
+    user_name = os.environ.get('PSQL_USER_NAME')
+    password = os.environ.get('PSQL_PASSWORD')
+    host = os.environ.get('PSQL_HOST')
+    database_name = os.environ.get('PSQL_DB_NAME')
 
+    env_variables_defined = user_name and password and host and database_name
+
+    if env_variables_defined:
+        # this string describes all info for psycopg2 to connect to the database
+        return 'postgresql://{user_name}:{password}@{host}/{database_name}'.format(
+            user_name=user_name,
+            password=password,
+            host=host,
+            database_name=database_name
+        )
+    else:
+        raise KeyError('Some necessary environment variable(s) are not defined')
+
+
+def open_database():
     try:
-        with open(file_name, "r") as file:
-            lines = file.readlines()
+        connection_string = get_connection_string()
+        connection = psycopg2.connect(connection_string)
+        connection.autocommit = True
+    except psycopg2.DatabaseError as exception:
+        print('Database connection problem')
+        raise exception
+    return connection
 
-            listed_data = [element.replace("\n", "").split(separator) for element in lines]
-            dict_keys = listed_data[0]
-            dict_answers = listed_data[1:]
-            all_data = []
 
-            for i in range(len(dict_answers)):
-                new_dict = dict(zip(dict_keys,dict_answers[i]))
-                all_data.append(new_dict)
+def connection_handler(function):
+    def wrapper(*args, **kwargs):
+        connection = open_database()
+        # we set the cursor_factory parameter to return with a RealDictCursor cursor (cursor which provide dictionaries)
+        dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        ret_value = function(dict_cur, *args, **kwargs)
+        dict_cur.close()
+        connection.close()
+        return ret_value
 
-        return all_data
-
-    except IOError:
-        return {}
-
-#potrzebna jeszcze funkcja write/append file
-
-# def write_dict_to_file(file_name,dict separator=','):
-#
-#     with open(file_name, "w") as file:
-#         for record in dict:
-#             row = separator.join(record)
-#             file.write(row + "\n")
+    return wrapper
