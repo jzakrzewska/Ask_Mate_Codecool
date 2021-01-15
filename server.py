@@ -18,15 +18,20 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def list_questions():
-    dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
 
-    questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
+    question_detail = data_manager.list_questions()
+    return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 
-    return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
 
-
-@app.route("/add", methods=["GET"])
+@app.route("/add", methods=["GET", "POST"])
 def add_question_get():
+    if request.method == "POST":
+        question = request.form
+        image = request.files["image"]
+        print(image.filename)
+        data_manager.add_question(question)
+        return redirect("/")
     return render_template("request_form.html")
 
 
@@ -64,15 +69,14 @@ def upload_image():
 def display_a_question(question_id):
     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
-    questions = data_manager.read_dict_from_file(data_manager.question_file)
-    answers = data_manager.read_dict_from_file(data_manager.answers_file)
+    questions = data_manager.list_questions
+    answers = data_manager.list_answers
 
     question = util.finding_by_id(questions, 'id', question_id)
 
-    answers = list(
-        item for item in answers if item['question_id'] == question_id)
+    answers = list(item for item in answers if item['question_id'] == question_id)
     question["view_number"] = int(question.get("view_number", 0)) + 1
-    data_manager.write_data_to_file(data_manager.question_file, questions)
+    #data_manager.write_data_to_file(data_manager.question_file, questions)
 
     return render_template(
         'question.html',
