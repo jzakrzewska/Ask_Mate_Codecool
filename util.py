@@ -3,6 +3,17 @@ from datetime import datetime
 
 import data_manager
 
+#wydaje mi się, że można by użyć taką funkcję na wszystko co jest liczbą,
+def sort_questions_by_numbers(data, sorted_by: str, mode: bool):
+    int_list = []
+    for text in data:
+        text[sorted_by] = int(text[sorted_by])
+        int_list.append(sorted_by)
+    sorted_data = sorted(int_list, key=lambda d: d[sorted_by], reverse=mode)
+
+    return sorted_data
+
+
 def sort_questions_from_greatest_id(data):
     int_list = []
     for text in data:
