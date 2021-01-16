@@ -2,6 +2,10 @@ from flask import Flask, render_template, url_for, request, redirect
 
 import os
 import time
+
+from psycopg2._psycopg import cursor
+from psycopg2.extras import RealDictCursor
+
 import data_manager
 import util
 
@@ -19,13 +23,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route("/")
 def list_questions():
     dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
-    question_list = request.args.get("question")
-
-    if question_list:
-        question = data_manager.get_question(question_list)
 
 
-    return render_template("list_questions.html", headers=dictionary_keys, stories=question_list)
+
+    question = data_manager.get_question()
+
+    return render_template("list_questions.html", headers=dictionary_keys, stories=question)
 
 
 @app.route("/add", methods=["GET"])
@@ -38,23 +41,13 @@ app.config["IMAGE_UPLOADS"] = "/Users/admin/cc_projects/Ask_Mate_Codecool/images
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 
 
-@app.route("/add", methods=["POST"])
+@app.route("/add-question", methods=["GET", "POST"])
 def add_question_post():
-    if request.files:
-        image = request.files["image"]
-        image.save(os.path.join("/Users/admin/cc_projects/Ask_Mate_Codecool/images", image.filename))
-        image_name = "images/" + image.filename
-        print("image saved")
-
-        data = {"id": util.greatest_id(data_manager.read_dict_from_file(question_file)) + 1,
-                "submission_time": int(time.time()),
-                "view_number": 0,
-                "vote_number": 0,
-                "title": request.form.get("title"),
-                "message": request.form.get("message"),
-                "image": image_name}
-
-        data_manager.add_dict_to_file(question_file, data)
+    if request.method == "POST":
+        question = request.form
+        data_manager.add_question(question)
+        return redirect('/')
+    return render_template("/request_form.html")
 
     return redirect(url_for("list_questions"))
 

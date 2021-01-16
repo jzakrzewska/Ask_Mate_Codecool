@@ -1,19 +1,38 @@
+from typing import List, Dict
+
+from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
+import connection
+import time
 
-import util
+@connection.connection_handler
+def get_id(cursor: RealDictCursor) -> list:
+    pass
 
 
+@connection.connection_handler
 def get_question(cursor: RealDictCursor) -> list:
-
-    query = """ 
-    SELECT image, message, title, vote_number, view_number, submission_time
-    FROM question """
+    query = """
+            SELECT id, image, message, title, vote_number, view_number, submission_time
+            FROM question
+            ORDER BY id;"""
     cursor.execute(query)
     return cursor.fetchall()
 
+@connection.connection_handler
+def add_question(cursor: RealDictCursor, question) -> list:
 
-
-
+    command = """
+            INSERT INTO question (id, image, message, title, vote_number, view_number, submission_time)
+            VALUES %(id)s,%(image)s,%(message)s,%(title)s,%(vote_number)s,%(view_number)s,%(submission_time)s);"""
+    param = {'id': "3",
+            'image': None,
+             'message': question.get("massage"),
+             'title': question.get("title"),
+             'vote_number': "0",
+             'view_number': "0",
+             'submission_time': int(time.time())}
+    cursor.execute(command, param)
 # answers_file = "sample_data/answer.csv"
 # question_file = "sample_data/question.csv"
 #
