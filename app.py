@@ -18,15 +18,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/")
 def list_questions():
-    question_list = request.args.get('question')
+    dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    question_list = request.args.get("question")
 
     if question_list:
-        list_details = data_manager.get_question(question_list)
+        question = data_manager.get_question(question_list)
 
-
-    dictionary_keys = data_manager.dictionary_keys_in_memory_question
-    #
-    # questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
 
     return render_template("list_questions.html", headers=dictionary_keys, stories=question_list)
 

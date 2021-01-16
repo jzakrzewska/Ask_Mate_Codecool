@@ -3,11 +3,11 @@ from psycopg2.extras import RealDictCursor
 import util
 
 
-
 def get_question(cursor: RealDictCursor) -> list:
 
-    query = """ SELECT * 
-                FROM question """
+    query = """ 
+    SELECT image, message, title, vote_number, view_number, submission_time
+    FROM question """
     cursor.execute(query)
     return cursor.fetchall()
 
