@@ -7,7 +7,10 @@ import datetime
 
 @connection.connection_handler
 def get_id(cursor: RealDictCursor) -> list:
-    pass
+    query = """
+            SELECT MAX(id) FROM question"""
+    cursor.execute(query)
+    return cursor.fetchall()
 
 
 @connection.connection_handler
@@ -25,12 +28,12 @@ def add_question(cursor: RealDictCursor, question) -> list:
     command = """
             INSERT INTO question (id, image, message, title, vote_number, view_number, submission_time)
             VALUES %(id)s,%(image)s,%(message)s,%(title)s,%(vote_number)s,%(view_number)s,%(submission_time)s);"""
-    param = {'id': 3,
+    param = {'id': get_id + 1,
              'image': None,
-             'message': question.get("massage"),
+             'message': question.get("message"),
              'title': question.get("title"),
-             'vote_number': 0,
-             'view_number': 0,
+             'vote_number': "0",
+             'view_number': "0",
              'submission_time': datetime.datetime.now()}
     cursor.execute(command, param)
 # answers_file = "sample_data/answer.csv"
