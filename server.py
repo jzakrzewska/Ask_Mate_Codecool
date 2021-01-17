@@ -9,11 +9,15 @@ app = Flask(__name__)
 answers_file = "sample_data/answer.csv"
 question_file = "sample_data/question.csv"
 
-#dodać folder static
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 TARGET_FOLDER = 'static/images/'
 UPLOAD_FOLDER = os.path.join(APP_ROOT, TARGET_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
+
+
+
+
 
 
 @app.route("/")
@@ -25,13 +29,13 @@ def list_questions():
 
 
 @app.route("/add", methods=["GET", "POST"])
-def add_question_get():
+def add_question():
     if request.method == "POST":
         question = request.form
 
         image = request.files["image"]
         print(image.filename)
-        image.save(os.path.join("/static/images", image.filename))
+        image.save(os.path.join(UPLOAD_FOLDER, image.filename))
         image_name = "images/" + image.filename
         data_manager.add_question(question)
         return redirect("/")

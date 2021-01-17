@@ -39,7 +39,7 @@
 <body>
 
         <h1 id= "AskMateHeader">Ask new question!</h1>
-         <form action="{{ url_for("add_question_post") }}" method="post" enctype="multipart/form-data">
+         <form action="{{ url_for("add_question") }}" method="post" enctype="multipart/form-data">
              <label for="title">Title</label><br>
              <input name="title" id="title" type="text" minlength="5" maxlength="50"> <br><br>
 
