@@ -20,29 +20,23 @@ def list_questions(cursor: RealDictCursor) -> list:
 def add_question(cursor: RealDictCursor, question):
     command = """
         INSERT INTO question (id, submission_time, view_number, vote_number, title, message, image)
-        VALUES (%(id)s,%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s)
+        
+        VALUES (DEFAULT,%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s)
+        
+    
     """
-    next_id = get_max_id + 1
     param = {
-        #"id": next_id,
+        "id": id,
         'submission_time': datetime.now(),
         'view_number': 0,
         'vote_number': 0,
         'title': question.get('title'),
         "message": question.get("message"),
-        "image": "image"
+        "image": question.get("image.filename")
     }
 
     cursor.execute(command, param)
 
-# @connection.connection_handler
-# def get_max_id(cursor: RealDictCursor) -> list:
-#     query = """
-#         SELECT nextval("id")
-#         """
-#
-#     cursor.execute(query)
-#     return cursor.fetchone()
 
 import util
 

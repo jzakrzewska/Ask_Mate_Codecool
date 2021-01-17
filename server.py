@@ -28,37 +28,16 @@ def list_questions():
 def add_question_get():
     if request.method == "POST":
         question = request.form
+
         image = request.files["image"]
         print(image.filename)
+        image.save(os.path.join("/static/images", image.filename))
+        image_name = "images/" + image.filename
         data_manager.add_question(question)
         return redirect("/")
     return render_template("request_form.html")
 
 
-
-app.config["IMAGE_UPLOADS"] = "/Users/admin/cc_projects/Ask_Mate_Codecool/images"
-app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
-
-
-@app.route("/add", methods=["POST"])
-def add_question_post():
-    if request.files:
-        image = request.files["image"]
-        image.save(os.path.join("/Users/admin/cc_projects/Ask_Mate_Codecool/images", image.filename))
-        image_name = "images/" + image.filename
-        print("image saved")
-
-        data = {"id": util.greatest_id(data_manager.read_dict_from_file(question_file)) + 1,
-                "submission_time": int(time.time()),
-                "view_number": 0,
-                "vote_number": 0,
-                "title": request.form.get("title"),
-                "message": request.form.get("message"),
-                "image": image_name}
-
-        data_manager.add_dict_to_file(question_file, data)
-
-    return redirect(url_for("list_questions"))
 
 @app.route("/add/upload-image", methods=["GET", "POST"])
 def upload_image():
