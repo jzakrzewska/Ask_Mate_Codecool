@@ -34,9 +34,12 @@ def add_question():
         question = request.form
 
         image = request.files["image"]
-        print(image.filename)
-        image.save(os.path.join(UPLOAD_FOLDER, image.filename))
-        image_name = "images/" + image.filename
+
+        if image.filename != "":
+            image.save(os.path.join(UPLOAD_FOLDER, image.filename))
+            image_name = "images/" + image.filename
+        else:
+            image.filename = "no image"
         data_manager.add_question(question)
         return redirect("/")
     return render_template("request_form.html")
@@ -56,6 +59,7 @@ def display_a_question(id):
         'question.html',
         question=question_to_display,
         answers=answers,
+        id=id,
         question_headers=question_dictionary_keys,
         answers_headers=answers_dictionary_keys
     )
@@ -63,10 +67,8 @@ def display_a_question(id):
 
 @app.route('/question/delete/<id>/', methods=["GET"])
 def delete_a_question(id):
-    dictionary_keys = data_manager.dictionary_keys_in_memory_question
     data_manager.delete_question_by_id(id)
-    question_detail = data_manager.list_questions()
-    return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
+    return redirect(url_for("list_questions"))
 #
 #
 # @app.route("/question/<question_id>/add_new_answer", methods=["GET"])

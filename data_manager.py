@@ -63,7 +63,7 @@ def get_answer_by_question_id(cursor: RealDictCursor, question_id) -> list:
 
 @connection.connection_handler
 def delete_question_by_id(cursor: RealDictCursor, question_id):
-    print(question_id)
+
     return cursor.execute("DELETE FROM question WHERE id = %s", (question_id,))
 
 
