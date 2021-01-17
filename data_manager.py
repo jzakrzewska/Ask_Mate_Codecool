@@ -10,6 +10,8 @@ def get_id(cursor: RealDictCursor) -> list:
     query = """
             SELECT MAX(id) + 1  FROM question"""
     cursor.execute(query)
+
+
     return cursor.fetchall()
 
 

@@ -6,3 +6,4 @@ import data_manager
 import util
 import  app
 
+print(data_manager.get_id())
