@@ -5,13 +5,6 @@ from psycopg2.extras import RealDictCursor
 import connection
 import datetime
 
-@connection.connection_handler
-def get_id(cursor: RealDictCursor) -> list:
-    query = """
-            SELECT MAX(id) FROM question"""
-    cursor.execute(query)
-    return cursor.fetchall()
-
 
 @connection.connection_handler
 def get_question(cursor: RealDictCursor) -> list:
@@ -22,20 +15,29 @@ def get_question(cursor: RealDictCursor) -> list:
     cursor.execute(query)
     return cursor.fetchall()
 
-@connection.connection_handler
-def add_question(cursor: RealDictCursor, question) -> list:
 
+@connection.connection_handler
+def add_question(cursor: RealDictCursor, question):
     command = """
-            INSERT INTO question (id, image, message, title, vote_number, view_number, submission_time)
-            VALUES %(id)s,%(image)s,%(message)s,%(title)s,%(vote_number)s,%(view_number)s,%(submission_time)s);"""
-    param = {'id': get_id + 1,
-             'image': None,
-             'message': question.get("message"),
-             'title': question.get("title"),
-             'vote_number': "0",
-             'view_number': "0",
-             'submission_time': datetime.datetime.now()}
+        INSERT INTO question (id, submission_time, view_number, vote_number, title, message, image)
+
+        VALUES (DEFAULT,%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s)
+
+
+    """
+    param = {
+        "id": id,
+        'submission_time': datetime.now(),
+        'view_number': 0,
+        'vote_number': 0,
+        'title': question.get('title'),
+        "message": question.get("message"),
+        "image": question.get("image")
+    }
+
     cursor.execute(command, param)
+
+
 # answers_file = "sample_data/answer.csv"
 # question_file = "sample_data/question.csv"
 #
