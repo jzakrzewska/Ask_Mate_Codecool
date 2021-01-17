@@ -61,13 +61,11 @@ def display_a_question(id):
     )
 
 
-@app.route('/question/delete/<question_id>/', methods=["GET"])
-def delete_a_question(question_id):
+@app.route('/question/delete/<id>/', methods=["GET"])
+def delete_a_question(id):
     dictionary_keys = data_manager.dictionary_keys_in_memory_question
-    print("id not none")
-    data_manager.delete_question_by_id(question_id)
+    data_manager.delete_question_by_id(id)
     question_detail = data_manager.list_questions()
-    print(dictionary_keys, question_detail)
     return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 #
 #
