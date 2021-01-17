@@ -46,45 +46,29 @@ def add_question():
 @app.route('/question/<id>', methods=['GET'])
 def display_a_question(id):
     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
-    question = data_manager.get_question_by_id(id)
-    print(question)
+    question_to_display = data_manager.get_question_by_id(id)
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
-
-
     answers = data_manager.get_answer_by_question_id(id)
-    print(answers)
 
 
-    # answers = list(item for item in answers if item['question_id'] == id)
-    # question["view_number"] = int(question.get("view_number", 0)) + 1
-    #data_manager.write_data_to_file(data_manager.question_file, questions)
 
     return render_template(
         'question.html',
-        question=question,
+        question=question_to_display,
         answers=answers,
         question_headers=question_dictionary_keys,
         answers_headers=answers_dictionary_keys
     )
 
-#
-# @app.route('/question/<question_id>/delete', methods=["GET"])
-# def delete_a_question_get(question_id):
-#     dictionary_keys = data_manager.dictionary_keys_in_memory_question
-#     questions = data_manager.read_dict_from_file(data_manager.question_file)
-#     answers = data_manager.read_dict_from_file(data_manager.answers_file)
-#
-#     question_to_delete = util.finding_by_id(questions, 'id', question_id)
-#
-#     questions_after_deletion = list(item for item in questions if item != question_to_delete)
-#     answers_after_deletion = list(item for item in answers if item['question_id'] != question_id)
-#
-#     data_manager.write_data_to_file(data_manager.question_file, questions_after_deletion)
-#     data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
-#
-#     questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
-#
-#     return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
+
+@app.route('/question/delete/<question_id>/', methods=["GET"])
+def delete_a_question(question_id):
+    dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    print("id not none")
+    data_manager.delete_question_by_id(question_id)
+    question_detail = data_manager.list_questions()
+    print(dictionary_keys, question_detail)
+    return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 #
 #
 # @app.route("/question/<question_id>/add_new_answer", methods=["GET"])

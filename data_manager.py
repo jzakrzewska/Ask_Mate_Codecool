@@ -38,13 +38,14 @@ def add_question(cursor: RealDictCursor, question):
     cursor.execute(command, param)
 
 @connection.connection_handler
-def get_question_by_id(cursor: RealDictCursor, id) -> list:
+def get_question_by_id(cursor: RealDictCursor, question_id) -> list:
     query = """
         SELECT view_number, vote_number, title, message, image
         FROM question
         WHERE id = %(id)s
         """
-    param = {'id': id}
+
+    param = {'id': question_id}
     cursor.execute(query,param)
     return cursor.fetchall()
 
@@ -59,6 +60,16 @@ def get_answer_by_question_id(cursor: RealDictCursor, question_id) -> list:
     param = {'id': question_id}
     cursor.execute(query, param)
     return cursor.fetchall()
+
+@connection.connection_handler
+def delete_question_by_id(cursor: RealDictCursor, question_id):
+    print(question_id)
+    return cursor.execute("DELETE FROM question WHERE id = %s", (question_id,))
+
+
+
+
+
 
 dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
 dictionary_keys_in_memory_answer = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
