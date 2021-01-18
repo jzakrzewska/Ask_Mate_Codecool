@@ -23,9 +23,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route("/")
 def list_questions():
     dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
-
-
-
     question = data_manager.get_question()
 
     return render_template("list_questions.html", headers=dictionary_keys, stories=question)
