@@ -70,6 +70,18 @@ def delete_a_question(id):
     data_manager.delete_question_by_id(id)
     return redirect(url_for("list_questions"))
 
+@app.route("/answer/<answer_id>/delete/<id>", methods=["GET"])
+def delete_an_answer(answer_id, id):
+    question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    question_to_display = data_manager.get_question_by_id(id)
+    answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+    answers = data_manager.get_answer_by_question_id(id)
+    data_manager.delete_answer_by_question_id(answer_id, id)
+    return redirect(url_for("display_a_question", answer_id=answer_id, id=id,
+                            question_headers=question_dictionary_keys,
+                            answers_headers=answers_dictionary_keys,
+                            question=question_to_display,
+                            answers=answers))
 
 @app.route("/question/<id>/add_new_answer", methods=["GET", "POST"])
 def add_new_answer(id):
@@ -97,27 +109,10 @@ def add_new_answer(id):
                             answers_headers=answers_dictionary_keys))
     return render_template("add_new_answer.html", question=question,id=id)
 
-# @app.route("/question/<question_id>/add_new_answer", methods=["POST"])
-# def add_new_answer(question_id):
-#     answer = {"id": util.greatest_id(data_manager.read_dict_from_file(answers_file)) + 1,
-#               "submission_time": int(time.time()),
-#               "vote_number": 0,
-#               "question_id": question_id,
-#               "message": request.form.get("message"),
-#               "image": ""
-#               }
-#     data_manager.add_dict_to_file(answers_file, answer)
-#     return redirect(url_for("display_a_question", question_id=question_id))
 
 
-@app.route("/answer/<answer_id>/delete/<question_id>", methods=["GET"])
-def delete_an_answer(answer_id, question_id):
-    answers = data_manager.read_dict_from_file(data_manager.answers_file)
 
-    answers_after_deletion = list(d for d in answers if d["id"] != answer_id)
-    data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
 
-    return redirect(url_for("display_a_question", question_id=question_id))
 
 #
 # @app.route('/answer/<answer_id>/vote_up/<question_id>', methods=['GET'])
