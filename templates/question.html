@@ -47,16 +47,20 @@
     </style>
 </head>
 <body>
-    <h1 id="AskMateHeader">{{ question['title']}}</h1>
+
+    <h1 id="AskMateHeader">{% for item in question %} {{ item.title }} {% endfor %}</h1>
     <br>
-    {{ question['message'] }}
-    <br>
+    <p>{% for item in question %}
+        {{ item.message }}
+        {% endfor %}
+        </p>
+        <br>
     <h2 id="AskMateHeader">Answers:</h2>
 
         <table style="width:100%">
         <thead>
             <tr>
-                {% for header in answers_headers if header != 'question_id' and header != 'id' %}
+                {% for header in answers_headers if header != 'id' %}
                     <th>
                         {{ header }}
                     </th>
@@ -66,7 +70,7 @@
             <tbody>
             {% for answer in answers %}
                 <tr>
-                    {% for header in answers_headers if header != 'question_id' and header != 'id' %}
+                    {% for header in answers_headers if header != 'id' %}
                         <td>
                             {% if header == "vote_number" %}
                                 {{ answer[header] }} votes
@@ -76,16 +80,20 @@
                         </td>
                     {% endfor %}
                     <td>
-                        <a href="{{ url_for("delete_an_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">delete answer</button></a>
-                        <a href="{{ url_for("vote_up_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">vote up</button></a>
-                        <a href="{{ url_for("vote_down_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">vote down</button></a>
+                        <a href="{{ url_for("delete_an_answer", id=id, answer_id=answer["id"]) }}"><button class="small_button">delete answer</button></a>
+{#                        <a href="{{ url_for("vote_up_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">vote up</button></a>#}
+{#                        <a href="{{ url_for("vote_down_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">vote down</button></a>#}
                     </td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
-    <br><a href="{{ url_for("add_new_answer_get", question_id=question["id"]) }}"><button class="small_button">add new answer</button></a><br>
-    <br><a href="{{ url_for("delete_a_question_get", question_id=question["id"]) }}"><button class="small_button">delete question</button></a><br>
+            </tbody>
+        </table>
+    <br><a href="{{ url_for("add_new_answer", id=id) }}"><button class="small_button">add new answer</button></a><br>
+
+
+
+    <br><a href="{{ url_for("delete_a_question", id=id)}}"><button class="small_button">delete question</button></a><br>
+
     <br><a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a><br>
 </body>
 </html>
