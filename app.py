@@ -55,6 +55,9 @@ def add_question_post():
 def upload_image():
     return render_template("request_form.html")
 
+def edit_question():
+    pass
+
 
 @app.route('/question/<question_id>', methods=['GET'])
 def display_a_question(question_id):

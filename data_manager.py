@@ -31,7 +31,7 @@ def add_question(cursor: RealDictCursor, question) -> list:
     command = """
             INSERT INTO question (id, image, message, title, vote_number, view_number, submission_time)
             VALUES %(id)s,%(image)s,%(message)s,%(title)s,%(vote_number)s,%(view_number)s,%(submission_time)s);"""
-    param = {'id': 3,
+    param = {'id': 7,
              'image': question.get("image"),
              'message': question.get("message"),
              'title': question.get("title"),
@@ -39,6 +39,20 @@ def add_question(cursor: RealDictCursor, question) -> list:
              'view_number': 0,
              'submission_time': datetime.datetime.now()}
     cursor.execute(command, param)
+
+@connection.connection_handler
+def edit_question(cursor: RealDictCursor, title, message, id):
+    command = """
+                UPDATE question
+                SET title = %(title)s and message = %(message)
+                WHERE id = %(id)s;
+        """
+    param = {'message': message, "title": title, "id": id}
+    cursor.execute(command, param)
+
+
+
+
 # answers_file = "sample_data/answer.csv"
 # question_file = "sample_data/question.csv"
 #
