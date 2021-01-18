@@ -41,13 +41,9 @@ def add_question(cursor: RealDictCursor, question) -> list:
     cursor.execute(command, param)
 
 @connection.connection_handler
-def edit_question(cursor: RealDictCursor, title, message, id):
-    command = """
-                UPDATE question
-                SET title = %(title)s and message = %(message)
-                WHERE id = %(id)s;
-        """
-    param = {'message': message, "title": title, "id": id}
+def edit_question(cursor: RealDictCursor, title, message, question_id):
+    command = """UPDATE question SET title = %(title)s , message = %(message) WHERE id = %(id)s;"""
+    param = {'message': message, "title": title, "id": question_id}
     cursor.execute(command, param)
 
 @connection.connection_handler

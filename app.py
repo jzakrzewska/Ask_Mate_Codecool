@@ -55,6 +55,9 @@ def upload_image():
 
 @app.route("/question-edit/<question_id>", methods=["GET", "POST"])
 def edit_question(question_id):
+    message = "String"
+    title = "Title"
+    data_manager.edit_question(title, message, question_id)
     render_template("edit_question.html")
 
 
@@ -82,8 +85,8 @@ def edit_question(question_id):
 
 
 @app.route('/question/<question_id>/delete', methods=["GET"])
-def delete_a_question_get(id):
-    data_manager.del_question(id)
+def delete_a_question_get(question_id):
+    data_manager.del_question(question_id)
     return redirect(url_for("list_questions.html"))
 
 

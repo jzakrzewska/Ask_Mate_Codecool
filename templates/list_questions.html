@@ -91,7 +91,7 @@
                     {% for header in headers %}
                         <td>
                             {% if header == "id" %}
-                                <a href="www.OKTEST1.com ">{{ story[header] }}</a>
+                                <a href="{{ url_for("edit_question",question_id=story["id"] ) }}">{{ story[header] }}</a>
                             {% elif header == "view_number" %}
                                 {{ story[header] }} views
                             {% elif header == "vote_number" %}
