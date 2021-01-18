@@ -27,7 +27,7 @@ def add_question(cursor: RealDictCursor, question):
     """
     param = {
         "id": id,
-        'submission_time': datetime.now(),
+        'submission_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'view_number': 0,
         'vote_number': 0,
         'title': question.get('title'),
@@ -67,8 +67,24 @@ def delete_question_by_id(cursor: RealDictCursor, question_id):
     return cursor.execute("DELETE FROM question WHERE id = %s", (question_id,))
 
 
+@connection.connection_handler
+def add_answer_by_question_id(cursor: RealDictCursor, question_id, answer):
+    command = """
+        INSERT INTO answer (id, submission_time, vote_number, question_id, message, image)
 
+        VALUES (DEFAULT,%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s,%(image)s)
+    """
 
+    param = {
+        "id": id,
+        'submission_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'vote_number': 0,
+        'question_id': question_id,
+        "message": answer.get("message"),
+        "image": answer.get("image.filename")
+    }
+
+    cursor.execute(command, param)
 
 
 dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]

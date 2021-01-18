@@ -65,20 +65,38 @@ def display_a_question(id):
     )
 
 
-@app.route('/question/delete/<id>/', methods=["GET"])
+@app.route('/question/delete/<id>', methods=["GET"])
 def delete_a_question(id):
     data_manager.delete_question_by_id(id)
     return redirect(url_for("list_questions"))
-#
-#
-# @app.route("/question/<question_id>/add_new_answer", methods=["GET"])
-# def add_new_answer_get(question_id):
-#     question = next(
-#         (item for item in data_manager.read_dict_from_file(data_manager.question_file) if item['id'] == question_id),
-#         False)
-#     return render_template("add_new_answer.html", question=question)
-#
-#
+
+
+@app.route("/question/<id>/add_new_answer", methods=["GET", "POST"])
+def add_new_answer(id):
+    question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+    answers = data_manager.get_answer_by_question_id(id)
+    question = data_manager.get_question_by_id(id)
+    if request.method == "POST":
+
+        answer = request.form
+
+        image = request.files["image"]
+        if image.filename != "":
+            image.save(os.path.join(UPLOAD_FOLDER, image.filename))
+            image_name = "images/" + image.filename
+        else:
+            image.filename = "no image"
+        data_manager.add_answer_by_question_id(id, answer)
+
+        return redirect(url_for("display_a_question",
+                            answers=answers,
+                            question=question,
+                            id=id,
+                            question_headers=question_dictionary_keys,
+                            answers_headers=answers_dictionary_keys))
+    return render_template("add_new_answer.html", question=question,id=id)
+
 # @app.route("/question/<question_id>/add_new_answer", methods=["POST"])
 # def add_new_answer(question_id):
 #     answer = {"id": util.greatest_id(data_manager.read_dict_from_file(answers_file)) + 1,
@@ -90,17 +108,17 @@ def delete_a_question(id):
 #               }
 #     data_manager.add_dict_to_file(answers_file, answer)
 #     return redirect(url_for("display_a_question", question_id=question_id))
-#
-#
-# @app.route("/answer/<answer_id>/delete/<question_id>", methods=["GET"])
-# def delete_an_answer(answer_id, question_id):
-#     answers = data_manager.read_dict_from_file(data_manager.answers_file)
-#
-#     answers_after_deletion = list(d for d in answers if d["id"] != answer_id)
-#     data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
-#
-#     return redirect(url_for("display_a_question", question_id=question_id))
-#
+
+
+@app.route("/answer/<answer_id>/delete/<question_id>", methods=["GET"])
+def delete_an_answer(answer_id, question_id):
+    answers = data_manager.read_dict_from_file(data_manager.answers_file)
+
+    answers_after_deletion = list(d for d in answers if d["id"] != answer_id)
+    data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
+
+    return redirect(url_for("display_a_question", question_id=question_id))
+
 #
 # @app.route('/answer/<answer_id>/vote_up/<question_id>', methods=['GET'])
 # def vote_up_answer(answer_id, question_id):
