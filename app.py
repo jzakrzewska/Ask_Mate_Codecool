@@ -53,32 +53,32 @@ def add_question_post():
 def upload_image():
     return render_template("request_form.html")
 
-@app.route("/question-edit", methods=["GET", "POST"])
-def edit_question():
-    pass
+@app.route("/question-edit/<question_id>", methods=["GET", "POST"])
+def edit_question(question_id):
+    render_template("edit_question.html")
 
 
-@app.route('/question/<question_id>', methods=['GET'])
-def display_a_question(question_id):
-    question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
-    answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
-    questions = data_manager.read_dict_from_file(data_manager.question_file)
-    answers = data_manager.read_dict_from_file(data_manager.answers_file)
-
-    question = util.finding_by_id(questions, 'id', question_id)
-
-    answers = list(
-        item for item in answers if item['question_id'] == question_id)
-    question["view_number"] = int(question.get("view_number", 0)) + 1
-    data_manager.write_data_to_file(data_manager.question_file, questions)
-
-    return render_template(
-        'question.html',
-        question=question,
-        answers=answers,
-        question_headers=question_dictionary_keys,
-        answers_headers=answers_dictionary_keys
-    )
+# @app.route('/question/<question_id>', methods=['GET'])
+# def display_a_question(question_id):
+#     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
+#     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+#     questions = data_manager.read_dict_from_file(data_manager.question_file)
+#     answers = data_manager.read_dict_from_file(data_manager.answers_file)
+#
+#     question = util.finding_by_id(questions, 'id', question_id)
+#
+#     answers = list(
+#         item for item in answers if item['question_id'] == question_id)
+#     question["view_number"] = int(question.get("view_number", 0)) + 1
+#     data_manager.write_data_to_file(data_manager.question_file, questions)
+#
+#     return render_template(
+#         'question.html',
+#         question=question,
+#         answers=answers,
+#         question_headers=question_dictionary_keys,
+#         answers_headers=answers_dictionary_keys
+#     )
 
 
 @app.route('/question/<question_id>/delete', methods=["GET"])
