@@ -30,8 +30,8 @@ def add_question(cursor: RealDictCursor, question) -> list:
 
     command = """
             INSERT INTO question (id, image, message, title, vote_number, view_number, submission_time)
-            VALUES %(id)s,%(image)s,%(message)s,%(title)s,%(vote_number)s,%(view_number)s,%(submission_time)s);"""
-    param = {'id': 7,
+            VALUES (DEFAULT ,%(image)s,%(message)s,%(title)s,%(vote_number)s,%(view_number)s,%(submission_time)s);"""
+    param = {'id': id,
              'image': question.get("image"),
              'message': question.get("message"),
              'title': question.get("title"),
@@ -48,6 +48,16 @@ def edit_question(cursor: RealDictCursor, title, message, id):
                 WHERE id = %(id)s;
         """
     param = {'message': message, "title": title, "id": id}
+    cursor.execute(command, param)
+
+@connection.connection_handler
+def del_question(cursor: RealDictCursor, id: int):
+    command = """
+            DELETE
+            FROM question
+            WHERE id = %(id)s
+     """
+    param = {"id": id}
     cursor.execute(command, param)
 
 

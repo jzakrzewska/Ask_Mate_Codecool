@@ -51,10 +51,12 @@ def add_question_post():
 
     return redirect(url_for("list_questions"))
 
+
 @app.route("/add/upload-image", methods=["GET", "POST"])
 def upload_image():
     return render_template("request_form.html")
 
+@app.route("/question-edit", methods=["GET", "POST"])
 def edit_question():
     pass
 
@@ -83,22 +85,10 @@ def display_a_question(question_id):
 
 
 @app.route('/question/<question_id>/delete', methods=["GET"])
-def delete_a_question_get(question_id):
-    dictionary_keys = data_manager.dictionary_keys_in_memory_question
-    questions = data_manager.read_dict_from_file(data_manager.question_file)
-    answers = data_manager.read_dict_from_file(data_manager.answers_file)
+def delete_a_question_get(id):
+    data_manager.del_question(id)
+    return redirect(url_for("list_questions.html"))
 
-    question_to_delete = util.finding_by_id(questions, 'id', question_id)
-
-    questions_after_deletion = list(item for item in questions if item != question_to_delete)
-    answers_after_deletion = list(item for item in answers if item['question_id'] != question_id)
-
-    data_manager.write_data_to_file(data_manager.question_file, questions_after_deletion)
-    data_manager.write_data_to_file(data_manager.answers_file, answers_after_deletion)
-
-    questions = util.sort_questions_from_greatest_id(data_manager.read_dict_from_file(data_manager.question_file))
-
-    return render_template("list_questions.html", headers=dictionary_keys, stories=questions)
 
 
 @app.route("/question/<question_id>/add_new_answer", methods=["GET"])
