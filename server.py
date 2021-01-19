@@ -50,6 +50,7 @@ def add_question():
 def display_a_question(id):
     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
     question_to_display = data_manager.get_question_by_id(id)
+    data_manager.update_view_number(id)
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
     answers = data_manager.get_answer_by_question_id(id)
 

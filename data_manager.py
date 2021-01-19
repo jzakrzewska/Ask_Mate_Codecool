@@ -92,7 +92,10 @@ def delete_answer_by_question_id(cursor: RealDictCursor, id, question_id):
 
     return cursor.execute("DELETE FROM answer WHERE id = %s AND question_id = %s", (id, question_id,))
 
+@connection.connection_handler
+def update_view_number(cursor: RealDictCursor, id):
 
+    return cursor.execute("UPDATE question SET view_number = view_number + 1 WHERE id = %s", (id,))
 
 
 dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
