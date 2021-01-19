@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add new question!</title>
+    {% if question == None %}
+        <title>Add new question!</title>
+    {% else %}
+        <title>Edit question</title>
+    {% endif %}
     <style>
      #AskMateHeader {
          background-color: lightsteelblue;
@@ -37,8 +41,8 @@
     </style>
 </head>
 <body>
-
-        <h1 id= "AskMateHeader">Ask new question!</h1>
+  {% if question == None %}
+      <h1 id= "AskMateHeader">Ask new question!</h1>
          <form action="{{ url_for("add_question") }}" method="post" enctype="multipart/form-data">
              <label for="title">Title</label><br>
              <input name="title" id="title" type="text" minlength="5" maxlength="50"> <br><br>
@@ -48,11 +52,31 @@
 
              <label for="image">Select image</label>
              <input type="file" name="image" id="image"><br><br>
-{#             <input type = "submit" value="submit image">#}
+             {#             <input type = "submit" value="submit image">#}
 
 
              <p><input type="submit" value="submit question" class="small_button"></p>
              </form>
+  {% else %}
+      <h1 id= "AskMateHeader">Edit a question!</h1>
+         <form action="{{ url_for("edit_question", id=question["id"]) }}" method="post" enctype="multipart/form-data">
+             <label for="title">Title</label><br>
+             <input name="title" id="title" type="text" minlength="5" maxlength="50" value="{{ question["title"] }}"> <br><br>
+
+             <label for="message">Message</label><br>
+             <textarea name="message" id="message" minlength="5" maxlength="5000">{{ question["message"] }}</textarea><br><br>
+
+             {#  <label for="image">Select image</label>#}
+             {#<input type="file" name="image" id="image"><br><br>#}
+             {#             <input type = "submit" value="submit image">#}
+
+            <input name="id" id="id" type="hidden" value="{{ question["id"] }}">
+             <p><input type="submit" value="submit question" class="small_button"></p>
+             </form>
+  {% endif %}
+
+
+
 
         <br><a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a><br>
 

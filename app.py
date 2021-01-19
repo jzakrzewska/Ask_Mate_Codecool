@@ -42,7 +42,17 @@ def add_question():
             image.filename = "no image"
         data_manager.add_question(question)
         return redirect("/")
-    return render_template("request_form.html")
+    return render_template("request_form.html", question=None)
+
+@app.route("/edit/<id>", methods=["GET","POST"])
+def edit_question(id):
+    if request.method == "POST":
+        question = dict(request.form)
+        data_manager.edit_question_by_id(question)
+        return redirect(url_for(display_a_question(id)))
+    else:
+        question = data_manager.get_question_by_id(id)[0]
+        return render_template("request_form.html", question=question)
 
 
 

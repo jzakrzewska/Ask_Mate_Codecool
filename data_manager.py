@@ -87,6 +87,17 @@ def delete_question_by_id(cursor: RealDictCursor, question_id):
     return cursor.execute("DELETE FROM question WHERE id = %s", (question_id,))
 
 
+def edit_question_by_id(cursor: RealDictCursor, question):
+    command = """
+            UPDATE question
+            SET title = %(title)s, message = %(message)s
+            WHERE id = %(id)s        
+            """
+    param = {"id": question["id"],
+             "title": question["title"],
+             "message": question["message"]}
+    return cursor.execute(command, param)
+
 @connection.connection_handler
 def delete_answer_by_question_id(cursor: RealDictCursor, id, question_id):
 
