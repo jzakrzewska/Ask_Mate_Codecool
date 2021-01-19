@@ -86,7 +86,7 @@ def delete_question_by_id(cursor: RealDictCursor, question_id):
 
     return cursor.execute("DELETE FROM question WHERE id = %s", (question_id,))
 
-
+@connection.connection_handler
 def edit_question_by_id(cursor: RealDictCursor, question):
     command = """
             UPDATE question

@@ -47,8 +47,9 @@ def add_question():
 def edit_question(id):
     if request.method == "POST":
         question = dict(request.form)
+        print(question)
         data_manager.edit_question_by_id(question)
-        return redirect(url_for(display_a_question(id)))
+        return redirect(url_for("display_a_question",id=id))
     else:
         question = data_manager.get_question_by_id(id)[0]
         return render_template("request_form.html", question=question)
