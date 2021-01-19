@@ -92,19 +92,19 @@
                         <td>
                             {% if header == "id" %}
                               <a href="{{ url_for("display_a_question", id=story.id) }}">{{ story[header] }}</a>
-{#                            {% elif header == "view_number" %}#}
-{#                                {{ story[header] }} views#}
-{#                            {% elif header == "vote_number" %}#}
-{#                                {{ story[header] }} votes#}
+                            {% elif header == "view_number" %}
+                                {{ story[header] }} views
+                            {% elif header == "vote_number" %}
+                                {{ story[header] }} votes
                              {% else %}
                                 {{ story[header] }}
                             {% endif %}
                         </td>
                     {% endfor %}
-{#                    <td>#}
-{#                        <a href="{{ url_for("vote_question_up", id=story.id) }}"><button class="small_button">vote up</button></a>#}
-{#                        <a href="{{ url_for("vote_question_down", id=story.id) }}"><button class="small_button">vote down</button></a>#}
-{#                    </td>#}
+                    <td>
+                        <a href="{{ url_for("vote_question_up", id=story.id) }}"><button class="small_button">vote up</button></a>
+                        <a href="{{ url_for("vote_question_down", id=story.id) }}"><button class="small_button">vote down</button></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

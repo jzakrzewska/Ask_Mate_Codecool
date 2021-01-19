@@ -23,7 +23,6 @@ app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
 @app.route("/")
 def list_questions():
     dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
-
     question_detail = data_manager.list_questions()
     return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 
@@ -32,7 +31,6 @@ def list_questions():
 def add_question():
     if request.method == "POST":
         question = request.form
-
         image = request.files["image"]
 
         if image.filename != "":
@@ -40,6 +38,7 @@ def add_question():
             image_name = "images/" + image.filename
         else:
             image.filename = "no image"
+
         data_manager.add_question(question)
         return redirect("/")
     return render_template("request_form.html", question=None)
@@ -64,8 +63,6 @@ def display_a_question(id):
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
     answers = data_manager.get_answer_by_question_id(id)
 
-
-
     return render_template(
         'question.html',
         question=question_to_display,
@@ -88,6 +85,7 @@ def delete_an_answer(answer_id, id):
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
     answers = data_manager.get_answer_by_question_id(id)
     data_manager.delete_answer_by_question_id(answer_id, id)
+
     return redirect(url_for("display_a_question", answer_id=answer_id, id=id,
                             question_headers=question_dictionary_keys,
                             answers_headers=answers_dictionary_keys,
@@ -101,10 +99,9 @@ def add_new_answer(id):
     answers = data_manager.get_answer_by_question_id(id)
     question = data_manager.get_question_by_id(id)
     if request.method == "POST":
-
         answer = request.form
-
         image = request.files["image"]
+
         if image.filename != "":
             image.save(os.path.join(UPLOAD_FOLDER, image.filename))
             image_name = "images/" + image.filename
@@ -122,35 +119,30 @@ def add_new_answer(id):
 
 
 
+@app.route('/answer/<answer_id>/up/<id>', methods=['GET'])
+def vote_answer_up(answer_id, id):
+    data_manager.vote_up_answer(answer_id,id)
+    return redirect(url_for('display_a_question',
+                            id=id,
+                            answer_id=answer_id))
+
+@app.route('/answer/<answer_id>/down/<id>', methods=['GET'])
+def vote_answer_down(answer_id, id):
+    data_manager.vote_down_answer(answer_id,id)
+    return redirect(url_for('display_a_question',
+                            id=id,
+                            answer_id=answer_id))
 
 
+@app.route('/question/<id>/up', methods=['GET'])
+def vote_question_up(id):
+    data_manager.vote_up_question(id)
+    return redirect(url_for('list_questions'))
 
-#
-# @app.route('/answer/<answer_id>/vote_up/<question_id>', methods=['GET'])
-# def vote_up_answer(answer_id, question_id):
-#     util.voting_answer(answer_id, '+')
-#
-#     return redirect(url_for('display_a_question', question_id=question_id))
-#
-#
-# @app.route('/answer/<answer_id>/vote_down/<question_id>', methods=['GET'])
-# def vote_down_answer(answer_id, question_id):
-#     util.voting_answer(answer_id, '-')
-#
-#     return redirect(url_for('display_a_question', question_id=question_id))
-#
-#
-# @app.route('/question/<question_id>/vote_up', methods=['GET'])
-# def vote_question_up(question_id):
-#     util.voting_question(question_id, '+')
-#
-#     return redirect(url_for('list_questions'))
-#
-# @app.route('/question/<question_id>/vote_down', methods=['GET'])
-# def vote_question_down(question_id):
-#     util.voting_question(question_id, '-')
-#
-#     return redirect(url_for('list_questions'))
+@app.route('/question/<id>/down', methods=['GET'])
+def vote_question_down(id):
+    data_manager.vote_down_question(id)
+    return redirect(url_for('list_questions'))
 
 
 if __name__ == "__main__":

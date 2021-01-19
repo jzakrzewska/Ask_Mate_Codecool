@@ -81,8 +81,8 @@
                     {% endfor %}
                     <td>
                         <a href="{{ url_for("delete_an_answer", id=id, answer_id=answer["id"]) }}"><button class="small_button">delete answer</button></a>
-{#                        <a href="{{ url_for("vote_up_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">vote up</button></a>#}
-{#                        <a href="{{ url_for("vote_down_answer", question_id=question["id"], answer_id=answer["id"]) }}"><button class="small_button">vote down</button></a>#}
+                        <a href="{{ url_for("vote_answer_up", answer_id=answer["id"], id=id) }}"><button class="small_button">vote up</button></a>
+                        <a href="{{ url_for("vote_answer_down", answer_id=answer["id"], id=id) }}"><button class="small_button">vote down</button></a>
                     </td>
                 </tr>
             {% endfor %}

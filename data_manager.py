@@ -108,6 +108,29 @@ def update_view_number(cursor: RealDictCursor, id):
 
     return cursor.execute("UPDATE question SET view_number = view_number + 1 WHERE id = %s", (id,))
 
+@connection.connection_handler
+def vote_up_answer(cursor: RealDictCursor, id, question_id):
+
+    return cursor.execute("UPDATE answer SET vote_number = vote_number + 1 WHERE id = %s AND question_id = %s",(id,question_id))
+
+@connection.connection_handler
+def vote_down_answer(cursor: RealDictCursor, id, question_id):
+
+    return cursor.execute("UPDATE answer SET vote_number = vote_number - 1 WHERE id = %s AND question_id = %s",(id,question_id))
+
+
+@connection.connection_handler
+def vote_up_question(cursor: RealDictCursor, id):
+
+    return cursor.execute("UPDATE question SET vote_number = vote_number + 1 WHERE id = %s",(id,))
+
+@connection.connection_handler
+def vote_down_question(cursor: RealDictCursor, id):
+
+    return cursor.execute("UPDATE question SET vote_number = vote_number - 1 WHERE id = %s",(id,))
+
+
+
 
 dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
 dictionary_keys_in_memory_answer = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
