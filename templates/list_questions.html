@@ -101,10 +101,10 @@
                             {% endif %}
                         </td>
                     {% endfor %}
-{#                    <td>#}
-{#                        <a href="{{ url_for("vote_question_up", id=story.id) }}"><button class="small_button">vote up</button></a>#}
-{#                        <a href="{{ url_for("vote_question_down", id=story.id) }}"><button class="small_button">vote down</button></a>#}
-{#                    </td>#}
+                    <td>
+                        <a href="{{ url_for("vote_question_up", id=story.id) }}"><button class="small_button">vote up</button></a>
+                        <a href="{{ url_for("vote_question_down", id=story.id) }}"><button class="small_button">vote down</button></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

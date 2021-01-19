@@ -109,50 +109,30 @@ def add_new_answer(id):
 
 
 
-
-
-
-
 @app.route('/answer/<answer_id>/up/<id>', methods=['GET'])
 def vote_answer_up(answer_id, id):
     data_manager.vote_up_answer(answer_id,id)
-
-    print(answer_id,id)
     return redirect(url_for('display_a_question',
                             id=id,
-                            answer_id=answer_id
-                            ))
+                            answer_id=answer_id))
 
 @app.route('/answer/<answer_id>/down/<id>', methods=['GET'])
 def vote_answer_down(answer_id, id):
     data_manager.vote_down_answer(answer_id,id)
-
     return redirect(url_for('display_a_question',
                             id=id,
                             answer_id=answer_id))
 
 
+@app.route('/question/<id>/up', methods=['GET'])
+def vote_question_up(id):
+    data_manager.vote_up_question(id)
+    return redirect(url_for('list_questions'))
 
-
-
-# @app.route('/answer/<answer_id>/vote_down/<id>', methods=['GET'])
-# def vote_down_answer(answer_id, id, operator):
-#     util.voting_answer(answer_id, '-')
-#
-#     return redirect(url_for('display_a_question', id=id))
-#
-#
-# @app.route('/question/<id>/vote_up', methods=['GET'])
-# def vote_question_up(id):
-#     util.voting_question(question_id, '+')
-#
-#     return redirect(url_for('list_questions'))
-#
-# @app.route('/question/<id>/vote_down', methods=['GET'])
-# def vote_question_down(id):
-#     util.voting_question(question_id, '-')
-#
-#     return redirect(url_for('list_questions'))
+@app.route('/question/<id>/down', methods=['GET'])
+def vote_question_down(id):
+    data_manager.vote_down_question(id)
+    return redirect(url_for('list_questions'))
 
 
 if __name__ == "__main__":
