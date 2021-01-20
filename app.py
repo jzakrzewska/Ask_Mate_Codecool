@@ -15,7 +15,7 @@ UPLOAD_FOLDER = os.path.join(APP_ROOT, TARGET_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
 
-
+sort_options = ["id", "submission_time", "view_number", "vote_number", "title", "message",]
 
 
 
@@ -23,7 +23,12 @@ app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
 @app.route("/")
 def list_questions():
     dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
-    question_detail = data_manager.list_questions()
+    order_option = request.args.get("sort_list")
+    if order_option:
+        question_detail = data_manager.list_questions_sorted(order_option)
+    else:
+        question_detail = data_manager.list_questions()
+
     return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 
 

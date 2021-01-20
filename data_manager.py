@@ -1,4 +1,5 @@
 from psycopg2 import sql
+from psycopg2._psycopg import cursor
 from psycopg2.extras import RealDictCursor
 
 import connection
@@ -14,6 +15,29 @@ def list_questions(cursor: RealDictCursor) -> list:
 
     cursor.execute(query)
     return cursor.fetchall()
+
+@connection.connection_handler
+def list_questions_sorted(cursor: RealDictCursor, order_option):
+    query = sql.SQL("""
+            SELECT *
+            FROM question
+            ORDER BY  {}
+            """).format(sql.Identifier(order_option))
+
+    cursor.execute(query, {'order_option': order_option})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def list_questions_sorted_votes(cursor: RealDictCursor):
+    query = """
+            SELECT *
+            FROM question
+            ORDER BY vote_number
+            """
+    cursor.execute(query)
+    return cursor.fetchall()
+
 
 
 @connection.connection_handler
@@ -130,7 +154,9 @@ def vote_down_question(cursor: RealDictCursor, id):
     return cursor.execute("UPDATE question SET vote_number = vote_number - 1 WHERE id = %s",(id,))
 
 
+def sort_by_title():
 
+    return cursor.execute("SELECT * FROM question")
 
 dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
 dictionary_keys_in_memory_answer = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
