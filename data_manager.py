@@ -108,7 +108,6 @@ def edit_answer_by_id(cursor: RealDictCursor, answer, question_id):
     param = {"id": answer["id"],
              "message": answer["message"],
              "question_id": question_id}
-    print("param", param)
     return cursor.execute(command, param)
 
 

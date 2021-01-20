@@ -46,12 +46,12 @@ def add_question():
 
 @app.route("/edit/<id>", methods=["GET","POST"])
 def edit_question(id):
-    if request.method == "POST":
-        print("post")
-        question = dict(request.form)
 
+    if request.method == "POST":
+        question = dict(request.form)
         data_manager.edit_question_by_id(question)
         return redirect(url_for("display_a_question",id=id))
+
     else:
         question = data_manager.get_question_by_id(id)[0]
         return render_template("request_form.html", question=question)
@@ -60,16 +60,12 @@ def edit_question(id):
 def edit_answer(answer_id, id):
 
     if request.method == "POST":
-
-        print("post")
         answer = request.form
-
         data_manager.edit_answer_by_id(answer,id)
         return redirect(url_for("display_a_question",id=id, answer_id=answer_id,answer=answer))
+
     else:
-        print("get")
         answer = data_manager.get_answer_by_question_id(id)[0]
-        print("answer", answer)
         question = data_manager.get_question_by_id(id)
         return render_template("add_new_answer.html", question=question,id=id,answer=answer)
 
