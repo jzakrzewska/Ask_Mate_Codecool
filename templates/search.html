@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of questions</title>
+    <style>
+        .button {
+          background-color: #4CAF50;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+        .small_button {
+            background-color: lightsteelblue;
+          border: none;
+          color:darkslategrey;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 10px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+        #AskMateHeader {
+            background-color: lightsteelblue;
+            color: darkslategrey;
+            padding: 30px;
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+        th, td {
+            padding: 15px;
+            }
+        th {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1 id="AskMateHeader">Ask Mate<br></h1><h2 id= "AskMateHeader" >Search results</h2><br>
+    <h3>questions</h3>
+    <div>
+    {% for question in questions %}
+           {{ question.title }}{{ question.message }}<br>
+        {% endfor %}
+    </div>
+    <h3>answers</h3>
+    <div>
+    {% for answer in answers %}
+           {{ answer.message }}<br>
+        {% endfor %}
+    </div>
+
+    <br><a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a><br>
+
+</body>
+</html>

@@ -22,7 +22,7 @@ app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
 
 @app.route("/")
 def list_questions():
-    dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    dictionary_keys = data_manager.dictionary_keys_in_memory_question
     question_detail = data_manager.list_questions()
     return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 
@@ -34,8 +34,9 @@ def add_question():
         image = request.files["image"]
 
         if image.filename != "":
-            image.save(os.path.join(UPLOAD_FOLDER, image.filename))
             image_name = "images/" + image.filename
+            image.save(os.path.join(UPLOAD_FOLDER, image.filename))
+
         else:
             image.filename = "no image"
 
@@ -145,6 +146,15 @@ def vote_question_down(id):
     data_manager.vote_down_question(id)
     return redirect(url_for('list_questions'))
 
+
+@app.route('/search', methods=['GET'])
+def search_by_phase():
+    message = request.args.get("q")
+    result_question = data_manager.search_by_phase_question(message)
+    print(result_question)
+    result_answer = data_manager.search_by_phase_answer(message)
+    print(result_answer)
+    return render_template('search.html', questions=result_question, answers=result_answer)
 
 if __name__ == "__main__":
     app.run()

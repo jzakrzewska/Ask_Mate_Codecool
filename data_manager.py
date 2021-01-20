@@ -32,7 +32,7 @@ def add_question(cursor: RealDictCursor, question):
         'vote_number': 0,
         'title': question.get('title'),
         "message": question.get("message"),
-        "image": question.get("image.filename")
+        "image": question.get("image")
     }
 
     cursor.execute(command, param)
@@ -129,6 +129,28 @@ def vote_down_question(cursor: RealDictCursor, id):
 
     return cursor.execute("UPDATE question SET vote_number = vote_number - 1 WHERE id = %s",(id,))
 
+
+@connection.connection_handler
+def search_by_phase_question(cursor: RealDictCursor, phase) -> list:
+    query = """
+    SELECT * 
+    FROM question 
+    WHERE title LIKE %(phase)s OR message LIKE %(phase)s
+    """
+    param = {'phase': f"%{phase}%"}
+    cursor.execute(query,param)
+    return cursor.fetchall()
+
+@connection.connection_handler
+def search_by_phase_answer(cursor: RealDictCursor, phase) -> list:
+    query = """
+    SELECT * 
+    FROM answer 
+    WHERE message LIKE %(phase)s
+    """
+    param = {'phase': f"%{phase}%"}
+    cursor.execute(query,param)
+    return cursor.fetchall()
 
 
 
