@@ -15,15 +15,20 @@ UPLOAD_FOLDER = os.path.join(APP_ROOT, TARGET_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
 
-
+sort_options = ["id", "submission_time", "view_number", "vote_number", "title", "message",]
 
 
 
 
 @app.route("/")
 def list_questions():
-    dictionary_keys = data_manager.dictionary_keys_in_memory_question
-    question_detail = data_manager.list_questions()
+    dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    order_option = request.args.get("sort_list")
+    if order_option:
+        question_detail = data_manager.list_questions_sorted(order_option)
+    else:
+        question_detail = data_manager.list_questions()
+
     return render_template("list_questions.html", headers=dictionary_keys, stories=question_detail)
 
 
@@ -34,9 +39,8 @@ def add_question():
         image = request.files["image"]
 
         if image.filename != "":
-            image_name = "images/" + image.filename
             image.save(os.path.join(UPLOAD_FOLDER, image.filename))
-
+            image_name = "images/" + image.filename
         else:
             image.filename = "no image"
 
@@ -46,7 +50,6 @@ def add_question():
 
 @app.route("/edit/<id>", methods=["GET","POST"])
 def edit_question(id):
-
     if request.method == "POST":
         question = dict(request.form)
         data_manager.edit_question_by_id(question)

@@ -1,4 +1,5 @@
 from psycopg2 import sql
+from psycopg2._psycopg import cursor
 from psycopg2.extras import RealDictCursor
 
 import connection
@@ -12,6 +13,28 @@ def list_questions(cursor: RealDictCursor) -> list:
         ORDER BY id
         """
 
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@connection.connection_handler
+def list_questions_sorted(cursor: RealDictCursor, order_option):
+    query = sql.SQL("""
+            SELECT *
+            FROM question
+            ORDER BY {}
+            """).format(sql.Identifier(order_option))
+
+    cursor.execute(query, {'order_option': order_option})
+    return cursor.fetchall()
+
+
+@connection.connection_handler
+def list_questions_sorted_votes(cursor: RealDictCursor):
+    query = """
+            SELECT *
+            FROM question
+            ORDER BY vote_number
+            """
     cursor.execute(query)
     return cursor.fetchall()
 
@@ -32,7 +55,7 @@ def add_question(cursor: RealDictCursor, question):
         'vote_number': 0,
         'title': question.get('title'),
         "message": question.get("message"),
-        "image": question.get("image")
+        "image": question.get("image.filename")
     }
 
     cursor.execute(command, param)
@@ -167,7 +190,9 @@ def search_by_phase_answer(cursor: RealDictCursor, phase) -> list:
     cursor.execute(query,param)
     return cursor.fetchall()
 
+def sort_by_title():
 
+    return cursor.execute("SELECT * FROM question")
 
 dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
 dictionary_keys_in_memory_answer = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
