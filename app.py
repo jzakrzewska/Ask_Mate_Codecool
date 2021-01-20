@@ -151,9 +151,8 @@ def vote_question_down(id):
 def search_by_phase():
     message = request.args.get("q")
     result_question = data_manager.search_by_phase_question(message)
-    print(result_question)
     result_answer = data_manager.search_by_phase_answer(message)
-    print(result_answer)
+
     return render_template('search.html', questions=result_question, answers=result_answer)
 
 if __name__ == "__main__":
