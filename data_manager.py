@@ -99,6 +99,22 @@ def edit_question_by_id(cursor: RealDictCursor, question):
     return cursor.execute(command, param)
 
 @connection.connection_handler
+def edit_answer_by_id(cursor: RealDictCursor, answer, question_id):
+    command = """
+            UPDATE answer
+            SET message = %(message)s
+            WHERE id = %(id)s  AND question_id = %(question_id)s     
+            """
+    param = {"id": answer["id"],
+             "message": answer["message"],
+             "question_id": question_id}
+    print("param", param)
+    return cursor.execute(command, param)
+
+
+
+
+@connection.connection_handler
 def delete_answer_by_question_id(cursor: RealDictCursor, id, question_id):
 
     return cursor.execute("DELETE FROM answer WHERE id = %s AND question_id = %s", (id, question_id,))

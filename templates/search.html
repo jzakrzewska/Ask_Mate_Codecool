@@ -51,7 +51,7 @@
     <h3>questions</h3>
     <div>
     {% for question in questions %}
-           {{ question.title }}{{ question.message }}<br>
+           {{ question.title + "  " + question.message }}<br><br>
         {% endfor %}
     </div>
     <h3>answers</h3>
