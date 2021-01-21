@@ -44,7 +44,7 @@ def add_question():
         else:
             image.filename = "no image"
 
-        data_manager.add_question(question,"images/" + image.filename)
+        data_manager.add_question(question,"/images/" + image.filename)
         print(question)
         return redirect("/")
     return render_template("request_form.html", question=None)

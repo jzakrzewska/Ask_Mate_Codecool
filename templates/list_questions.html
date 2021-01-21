@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>List of questions</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:900|Work+Sans:300" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Montserrat:900|Work+Sans:300">
+    <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
 <h1 id="AskMateHeader">Ask Mate<br></h1><h2 id= "Header2" >List of all questions</h2><br>
@@ -58,7 +58,7 @@
                             {% elif header == "vote_number" %}
                                 {{ story[header] }} votes
                             {% elif header == "image" %}
-                                <img src="/static/images/{{story.header}}" width="70" height="50" alt="previous" title="Previous" border="0">
+                                <img src="../../static/{{story[header]}}" width="70" height="50" alt="previous" title="Previous" border="0">
                              {% else %}
                                 {{ story[header] }}
                             {% endif %}
