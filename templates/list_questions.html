@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>List of questions</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:900|Work+Sans:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-<h1 id="AskMateHeader">Ask Mate<br></h1><h1 id= "AskMateHeader" >List of all questions</h1><br>
-    <form>
+<h1 id="AskMateHeader">Ask Mate<br></h1><h2 id= "Header2" >List of all questions</h2><br>
+
+
+    <form class="filterForm">
         <label for="sort_list">How you wanted sorted?</label>
         <select name="sort_list" id="sort_list">
             {% for header in headers %}
@@ -20,7 +23,7 @@
 
 
 
-    <form action="/search">
+    <form class="filterForm" action="/search">
       <div>
         <input type="search" id="app_search" name="q"
          placeholder="Search the site..."
@@ -28,6 +31,10 @@
         <button>Search</button>
       </div>
     </form>
+
+
+
+
     <table style="width:100%">
 
         <thead>
@@ -56,9 +63,12 @@
                         </td>
                     {% endfor %}
                     <td>
-                        <a href="{{ url_for("vote_question_up", id=story.id) }}"><button class="small_button">vote up</button></a>
-                        <a href="{{ url_for("vote_question_down", id=story.id) }}"><button class="small_button">vote down</button></a>
+
+                            <a href="{{ url_for("vote_question_up", id=story.id)  }}" class="btn-icon"><i class="fa fa-thumbs-o-up" style="font-size:30px;color:#f03f35"></i></a>
+                            <a href="{{ url_for("vote_question_down", id=story.id) }}" class="btn-icon"><i class="fa fa-thumbs-o-down" style="font-size:30px;color:#f03f35"></i></a>
+
                     </td>
+
                 </tr>
             {% endfor %}
         </tbody>
