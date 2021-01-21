@@ -132,7 +132,7 @@ def add_new_answer(id):
                             id=id,
                             question_headers=question_dictionary_keys,
                             answers_headers=answers_dictionary_keys))
-    return render_template("add_new_answer.html", question=question,id=id)
+    return render_template("add_new_answer.html", question=question,id=id,answer=None)
 
 
 
