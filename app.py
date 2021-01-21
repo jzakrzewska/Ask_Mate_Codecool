@@ -40,11 +40,12 @@ def add_question():
 
         if image.filename != "":
             image.save(os.path.join(UPLOAD_FOLDER, image.filename))
-            image_name = "images/" + image.filename
+
         else:
             image.filename = "no image"
 
-        data_manager.add_question(question)
+        data_manager.add_question(question,"images/" + image.filename)
+        print(question)
         return redirect("/")
     return render_template("request_form.html", question=None)
 

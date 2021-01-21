@@ -40,7 +40,7 @@ def list_questions_sorted_votes(cursor: RealDictCursor):
 
 
 @connection.connection_handler
-def add_question(cursor: RealDictCursor, question):
+def add_question(cursor: RealDictCursor, question, image_path=""):
     command = """
         INSERT INTO question (id, submission_time, view_number, vote_number, title, message, image)
         
@@ -55,7 +55,7 @@ def add_question(cursor: RealDictCursor, question):
         'vote_number': 0,
         'title': question.get('title'),
         "message": question.get("message"),
-        "image": question.get("image.filename")
+        "image": image_path
     }
 
     cursor.execute(command, param)

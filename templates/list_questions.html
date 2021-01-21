@@ -57,6 +57,8 @@
                                 {{ story[header] }} views
                             {% elif header == "vote_number" %}
                                 {{ story[header] }} votes
+                            {% elif header == "image" %}
+                                <img src="/static/images/{{story.header}}" width="70" height="50" alt="previous" title="Previous" border="0">
                              {% else %}
                                 {{ story[header] }}
                             {% endif %}
@@ -64,8 +66,8 @@
                     {% endfor %}
                     <td>
 
-                            <a href="{{ url_for("vote_question_up", id=story.id)  }}" class="btn-icon"><i class="fa fa-thumbs-o-up" style="font-size:30px;color:#f03f35"></i></a>
-                            <a href="{{ url_for("vote_question_down", id=story.id) }}" class="btn-icon"><i class="fa fa-thumbs-o-down" style="font-size:30px;color:#f03f35"></i></a>
+                            <a href="{{ url_for("vote_question_up", id=story.id)  }}" ><i class="fa fa-thumbs-o-up" style="font-size:30px;color:#f03f35"></i></a>
+                            <a href="{{ url_for("vote_question_down", id=story.id) }}" ><i class="fa fa-thumbs-o-down" style="font-size:30px;color:#f03f35"></i></a>
 
                     </td>
 
@@ -73,7 +75,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <br><a href="{{ url_for("add_question", id=id) }}"><button class="small_button">add new question</button></a><br>
+    <p><br><a href="{{ url_for("add_question", id=id) }}"><button class="small_button">add new question</button></a><br></p>
 
 
 </body>

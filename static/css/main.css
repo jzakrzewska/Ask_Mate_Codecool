@@ -26,7 +26,7 @@
   font-size: 10px;
   margin: 4px 2px;
   cursor: pointer;
-    width: 100px;
+    width: 120px;
     border-radius: 2px;
 }
 #AskMateHeader {
@@ -65,7 +65,7 @@ ul {
 }
 
 body {
-  margin: 0;
+  margin: 10px;
   padding: 0;
   font-family: 'Work Sans', sans-serif;
   color: darkslategrey;

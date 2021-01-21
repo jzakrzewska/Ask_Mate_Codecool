@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ question['title'] }}</title>
-
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:900|Work+Sans:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
 </head>
@@ -41,24 +42,24 @@
                         </td>
                     {% endfor %}
                     <td>
-                        <a href="{{ url_for("delete_an_answer", answer_id=answer["id"],id=id) }}"><button class="small_button">delete answer</button></a>
-                        <a href="{{ url_for("vote_answer_up", answer_id=answer["id"], id=id) }}"><button class="small_button">vote up</button></a>
-                        <a href="{{ url_for("vote_answer_down", answer_id=answer["id"], id=id) }}"><button class="small_button">vote down</button></a>
-                        <a href="{{ url_for("edit_answer", answer_id=answer["id"], id=id) }}"><button class="small_button">edit answer</button></a>
+                        <a href="{{ url_for("delete_an_answer", answer_id=answer["id"],id=id) }}"><i class="fa fa-trash-o" style="font-size:30px;color:#f03f35"></i></a>
+                        <a href="{{ url_for("vote_answer_up", answer_id=answer["id"], id=id) }}"><i class="fa fa-thumbs-o-up" style="font-size:30px;color:#f03f35"></i></a>
+                        <a href="{{ url_for("vote_answer_down", answer_id=answer["id"], id=id) }}"><i class="fa fa-thumbs-o-down" style="font-size:30px;color:#f03f35"></i></a>
+                        <a href="{{ url_for("edit_answer", answer_id=answer["id"], id=id) }}"><i class="fa fa-pencil-square-o" style="font-size:30px;color:#f03f35"></i></a>
 
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-    <br><a href="{{ url_for("add_new_answer", id=id) }}"><button class="small_button">add new answer</button></a><br>
+    <p><br><a href="{{ url_for("add_new_answer", id=id) }}"><button class="small_button">add new answer</button></a><br></p>
 
-    <br><a href="{{ url_for("edit_question", id=id) }}"><button class="small_button">Edit question</button></a><br>
+    <p><br><a href="{{ url_for("edit_question", id=id) }}"><button class="small_button">edit question</button></a><br></p>
 
 
 
-    <br><a href="{{ url_for("delete_a_question", id=id)}}"><button class="small_button">delete question</button></a><br>
+    <p><br><a href="{{ url_for("delete_a_question", id=id)}}"><button class="small_button">delete question</button></a><br></p>
 
-    <br><a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a><br>
+    <p><br><a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a><br></p>
 </body>
 </html>
