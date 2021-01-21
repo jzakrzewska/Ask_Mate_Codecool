@@ -12,10 +12,16 @@
 
 </head>
 <body>
-    <h1 id= "AskMateHeader"> {{ question.message }}</h1>
+   <h1 id="Header2">{% for item in question %} {{ item.title }} {% endfor %}</h1>
+    <br>
+    <p>{% for item in question %}
+        {{ item.message }}
+        {% endfor %}
+        </p>
+
     <br>
   {% if answer == None %}
-      <h1 id= "Header2">Ask new question!</h1>
+      <h1 id= "Header2">Add new answer!</h1>
          <form action="{{ url_for("add_new_answer", id=id,answer=answer) }}" method="post" enctype="multipart/form-data">
 
              <label for="message">Message</label><br>

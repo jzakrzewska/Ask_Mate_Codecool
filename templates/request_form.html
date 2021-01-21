@@ -12,6 +12,7 @@
 
 </head>
 <body>
+
   {% if question == None %}
       <h1 id= "Header2">Ask new question!</h1>
          <form action="{{ url_for("add_question") }}" method="post" enctype="multipart/form-data">
@@ -29,6 +30,7 @@
              <p><input type="submit" value="submit question" class="small_button"></p>
              </form>
   {% else %}
+
       <h1 id= "Header2">Edit a question!</h1>
          <form action="{{ url_for("edit_question", id=question["id"]) }}" method="post" enctype="multipart/form-data">
              <label for="title">Title</label><br>

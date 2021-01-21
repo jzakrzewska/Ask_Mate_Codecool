@@ -65,8 +65,9 @@ def edit_answer(answer_id, id):
 
     if request.method == "POST":
         answer = request.form
+        question = data_manager.get_question_by_id(id)
         data_manager.edit_answer_by_id(answer,id)
-        return redirect(url_for("display_a_question",id=id, answer_id=answer_id,answer=answer))
+        return redirect(url_for("display_a_question",id=id, answer_id=answer_id,answer=answer,question=question))
 
     else:
         answer = data_manager.get_answer_by_question_id(id)[0]
