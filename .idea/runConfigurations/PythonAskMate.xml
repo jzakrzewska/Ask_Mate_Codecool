@@ -4,7 +4,10 @@
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
-      <env name="PYTHONUNBUFFERED" value="1" />
+      <env name="PYTHONUNBUFFERED" value="1 PSQL_USER_NAME=postgres" />
+      <env name="PSQL_PASSWORD" value="theRapyTM12" />
+      <env name="PSQL_HOST" value="localhost" />
+      <env name="PSQL_DB_NAME" value="AskMate" />
     </envs>
     <option name="SDK_HOME" value="C:\Users\SJ\Documents\GitHub\Ask_Mate_Codecool\venv\Scripts\python.exe" />
     <option name="WORKING_DIRECTORY" value="" />
