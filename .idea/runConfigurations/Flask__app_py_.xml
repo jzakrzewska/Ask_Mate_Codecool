@@ -1,0 +1,24 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Flask (app.py)" type="Python.FlaskServer" nameIsGenerated="true">
+    <option name="flaskDebug" value="true" />
+    <module name="Ask_Mate_Codecool" />
+    <option name="target" value="$PROJECT_DIR$/app.py" />
+    <option name="targetType" value="PATH" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PSQL_USER_NAME" value="postgres" />
+      <env name="PSQL_PASSWORD" value="theRapyTM12" />
+      <env name="PSQL_HOST" value="localhost" />
+      <env name="PSQL_DB_NAME" value="AskMate" />
+    </envs>
+    <option name="SDK_HOME" value="" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    <option name="launchJavascriptDebuger" value="false" />
+    <method v="2" />
+  </configuration>
+</component>
