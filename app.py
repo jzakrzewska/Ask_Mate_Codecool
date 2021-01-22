@@ -71,9 +71,7 @@ def edit_answer(answer_id, id):
 
     else:
         answer = data_manager.get_answer_by_id(answer_id)[0]
-        print(answer)
         question = data_manager.get_question_by_id(id)
-        print(question)
         return render_template("add_new_answer.html", question=question,id=id,answer=answer)
 
 @app.route('/question/<id>', methods=['GET'])
