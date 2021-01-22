@@ -176,7 +176,7 @@ def search_by_phase_question(cursor: RealDictCursor, phase) -> list:
     WHERE title LIKE %(phase)s OR message LIKE %(phase)s
     """
     param = {'phase': f"%{phase}%"}
-    cursor.execute(query,param)
+    cursor.execute(query, param)
     return cursor.fetchall()
 
 @connection.connection_handler
@@ -187,15 +187,58 @@ def search_by_phase_answer(cursor: RealDictCursor, phase) -> list:
     WHERE message LIKE %(phase)s
     """
     param = {'phase': f"%{phase}%"}
-    cursor.execute(query,param)
+    cursor.execute(query, param)
     return cursor.fetchall()
 
-def sort_by_title():
+@connection.connection_handler
+def get_comment_by_question_id(cursor: RealDictCursor, question_id) -> list:
+    query = """
+    SELECT id, message, submission_time, edited_count FROM comment
+    WHERE question_id = %(id)s
+    """
+    param = {'id': question_id}
+    cursor.execute(query, param)
+    return cursor.fetchall()
 
-    return cursor.execute("SELECT * FROM question")
 
-dictionary_keys_in_memory_question = ["id","submission_time","view_number","vote_number","title","message","image"]
+@connection.connection_handler
+def add_comment_to_question(cursor: RealDictCursor, question_id, comment):
+    command = """
+            INSERT INTO comment (id, question_id, answer_id, message, submission_time, edited_count)
+            VALUES (DEFAULT, %(question_id)s, %(answer_id)s, %(message)s, %(submission_time)s, %(edited_count)s)
+        """
+
+    param = {
+        "id": id,
+        'question_id': question_id,
+        'answer_id': None,
+        'message': comment.get('message'),
+        'submission_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'edited_count': 0
+    }
+
+    cursor.execute(command, param)
+
+
+@connection.connection_handler
+def edit_question_comment_by_id(cursor: RealDictCursor, comment, question_id):
+    command = """
+            UPDATE comment
+            SET message = %(message)s, 
+            WHERE id = %(id)s  AND question_id = %(question_id)s     
+            """
+    param = {"id": comment["id"],
+             "message": comment["message"],
+             "question_id": question_id}
+    return cursor.execute(command, param)
+
+@connection.connection_handler
+def delete_comment_by_question_id(cursor: RealDictCursor, id, question_id):
+
+    return cursor.execute("DELETE FROM comment WHERE id = %s AND question_id = %s", (id, question_id,))
+
+dictionary_keys_in_memory_question = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
 dictionary_keys_in_memory_answer = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
+dictionary_keys_in_memory_comments = ['id', 'message', 'submission_time', 'edited_count']
 
 

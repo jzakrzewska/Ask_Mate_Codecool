@@ -18,8 +18,6 @@ app.config["UPLOAD_EXTENSIONS"] = ['.jpg', '.png', '.gif']
 sort_options = ["id", "submission_time", "view_number", "vote_number", "title", "message",]
 
 
-
-
 @app.route("/")
 def list_questions():
     dictionary_keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
@@ -48,6 +46,7 @@ def add_question():
         return redirect("/")
     return render_template("request_form.html", question=None)
 
+
 @app.route("/edit/<id>", methods=["GET","POST"])
 def edit_question(id):
     if request.method == "POST":
@@ -59,26 +58,33 @@ def edit_question(id):
         question = data_manager.get_question_by_id(id)[0]
         return render_template("request_form.html", question=question)
 
+
 @app.route("/answer/<answer_id>/edit/<id>", methods=["GET","POST"])
 def edit_answer(answer_id, id):
 
     if request.method == "POST":
         answer = request.form
-        data_manager.edit_answer_by_id(answer,id)
-        return redirect(url_for("display_a_question",id=id, answer_id=answer_id,answer=answer))
+        data_manager.edit_answer_by_id(answer, id)
+        return redirect(url_for("display_a_question", id=id, answer_id=answer_id, answer=answer))
 
     else:
         answer = data_manager.get_answer_by_question_id(id)[0]
         question = data_manager.get_question_by_id(id)
-        return render_template("add_new_answer.html", question=question,id=id,answer=answer)
+        return render_template("add_new_answer.html", question=question, id=id, answer=answer)
+
 
 @app.route('/question/<id>', methods=['GET'])
 def display_a_question(id):
     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
     question_to_display = data_manager.get_question_by_id(id)
+
     data_manager.update_view_number(id)
+
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
     answers = data_manager.get_answer_by_question_id(id)
+
+    comments_dictionary_keys = data_manager.dictionary_keys_in_memory_comments
+    question_comments = data_manager.get_comment_by_question_id(id)
 
     return render_template(
         'question.html',
@@ -86,7 +92,9 @@ def display_a_question(id):
         answers=answers,
         id=id,
         question_headers=question_dictionary_keys,
-        answers_headers=answers_dictionary_keys
+        answers_headers=answers_dictionary_keys,
+        comments_headers=comments_dictionary_keys,
+        question_comments=question_comments,
     )
 
 
@@ -94,6 +102,7 @@ def display_a_question(id):
 def delete_a_question(id):
     data_manager.delete_question_by_id(id)
     return redirect(url_for("list_questions"))
+
 
 @app.route("/answer/<answer_id>/delete/<id>", methods=["GET"])
 def delete_an_answer(answer_id, id):
@@ -108,6 +117,7 @@ def delete_an_answer(answer_id, id):
                             answers_headers=answers_dictionary_keys,
                             question=question_to_display,
                             answers=answers))
+
 
 @app.route("/question/<id>/add_new_answer", methods=["GET", "POST"])
 def add_new_answer(id):
@@ -135,13 +145,13 @@ def add_new_answer(id):
     return render_template("add_new_answer.html", question=question,id=id,answer=None)
 
 
-
 @app.route('/answer/<answer_id>/up/<id>', methods=['GET'])
 def vote_answer_up(answer_id, id):
     data_manager.vote_up_answer(answer_id,id)
     return redirect(url_for('display_a_question',
                             id=id,
                             answer_id=answer_id))
+
 
 @app.route('/answer/<answer_id>/down/<id>', methods=['GET'])
 def vote_answer_down(answer_id, id):
@@ -156,6 +166,7 @@ def vote_question_up(id):
     data_manager.vote_up_question(id)
     return redirect(url_for('list_questions'))
 
+
 @app.route('/question/<id>/down', methods=['GET'])
 def vote_question_down(id):
     data_manager.vote_down_question(id)
@@ -169,6 +180,71 @@ def search_by_phase():
     result_answer = data_manager.search_by_phase_answer(message)
 
     return render_template('search.html', questions=result_question, answers=result_answer)
+
+
+@app.route("/question/<id>/add_new_comment", methods=["GET", "POST"])
+def add_new_comment_to_question(id):
+    question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    comments_dictionary_keys = data_manager.dictionary_keys_in_memory_comments
+
+    answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+    answers = data_manager.get_answer_by_question_id(id)
+
+    question = data_manager.get_question_by_id(id)
+    question_comments = data_manager.get_comment_by_question_id(id)
+
+    if request.method == "POST":
+        comment = request.form
+
+        data_manager.add_comment_to_question(id, comment)
+
+        return redirect(url_for("display_a_question",
+                            answers=answers,
+                            question=question,
+                            id=id,
+                            question_headers=question_dictionary_keys,
+                            answers_headers=answers_dictionary_keys,
+                            comments_headers=comments_dictionary_keys,
+                            question_comments=question_comments,
+                            ))
+    return render_template("request_form_comment.html", question=question, id=id, comment=None)
+
+@app.route("/comment/<comment_id>/edit/<id>", methods=["GET","POST"])
+def edit_question_comment(comment_id, id):
+
+    if request.method == "POST":
+        comment = request.form
+        data_manager.edit_question_comment_by_id(comment, id)
+        return redirect(url_for("display_a_question", id=id, comment_id=comment_id, comment=comment))
+
+    else:
+        comment = data_manager.get_comment_by_question_id(id)[0]
+        question = data_manager.get_question_by_id(id)
+        return render_template("request_form_comment.html", question=question, id=id, comment=comment)
+
+
+@app.route("/answer/<comment_id>/delete/<id>", methods=["GET"])
+def delete_a_question_comment(comment_id, id):
+    question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
+    question_to_display = data_manager.get_question_by_id(id)
+
+    answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
+    answers = data_manager.get_answer_by_question_id(id)
+
+    comments_dictionary_keys = data_manager.dictionary_keys_in_memory_comments
+    question_comments = data_manager.get_comment_by_question_id(id)
+
+    data_manager.delete_comment_by_question_id(comment_id, id)
+
+
+    return redirect(url_for("display_a_question", comment_id=comment_id, id=id,
+                            question_headers=question_dictionary_keys,
+                            answers_headers=answers_dictionary_keys,
+                            question=question_to_display,
+                            answers=answers,
+                            comments_headers=comments_dictionary_keys,
+                            question_comments=question_comments))
+
 
 if __name__ == "__main__":
     app.run()
