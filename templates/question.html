@@ -13,9 +13,11 @@
     <h1 id="Header2">{% for item in question %} {{ item.title }} {% endfor %}</h1>
     <br>
     <p>{% for item in question %}
-        {{ item.message }}
+        {{ item.message }}<br>
+        <img src="../../static/{{item.image}}" width="500" height="600" alt="photo">
+
         {% endfor %}
-        </p>
+    </p>
         <br>
     <h2 id="AskMateHeader">Answers:</h2>
 

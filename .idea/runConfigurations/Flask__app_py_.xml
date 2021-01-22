@@ -8,13 +8,13 @@
     <option name="PARENT_ENVS" value="true" />
     <envs>
       <env name="PSQL_USER_NAME" value="postgres" />
-      <env name="PSQL_PASSWORD" value="theRapyTM12" />
       <env name="PSQL_HOST" value="localhost" />
-      <env name="PSQL_DB_NAME" value="AskMate" />
+      <env name="PSQL_DB_NAME" value="Ask Mate" />
+      <env name="PSQL_PASSWORD" value="Bulwary23#" />
     </envs>
-    <option name="SDK_HOME" value="" />
-    <option name="WORKING_DIRECTORY" value="" />
-    <option name="IS_MODULE_SDK" value="true" />
+    <option name="SDK_HOME" value="/usr/local/bin/python3.8" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>List of questions</title>
-{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Montserrat:900|Work+Sans:300">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
@@ -58,7 +58,7 @@
                             {% elif header == "vote_number" %}
                                 {{ story[header] }} votes
                             {% elif header == "image" %}
-                                <img src="../../static/{{story[header]}}" width="70" height="50" alt="previous" title="Previous" border="0">
+                                <img src="../../static/{{story[header]}}" width="70" height="50" alt="photo" title="photo" border="0">
                              {% else %}
                                 {{ story[header] }}
                             {% endif %}
