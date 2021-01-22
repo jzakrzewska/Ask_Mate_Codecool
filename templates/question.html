@@ -43,14 +43,15 @@
                     </td>
                 {% endfor %}
                 <td>
-                    <a href="{{ url_for("edit_question_comment", comment_id=comment["id"], id=id) }}"><button class="small_button">edit comment</button></a>
-                    <a href="{{ url_for("delete_a_question_comment", comment_id=comment["id"],id=id) }}"><button class="small_button">delete answer</button></a>
+                    <a href="{{ url_for("edit_question_comment", comment_id=comment["id"], id=id) }}"><i class="fa fa-pencil-square-o" style="font-size:30px;color:#f03f35"></i></a>
+                    <a href="{{ url_for("delete_a_question_comment", comment_id=comment["id"],id=id) }}"><i class="fa fa-trash-o" style="font-size:30px;color:#f03f35"></i></a>
                 </td>
             </tr>
         {% endfor %}
-        <br><a href="{{ url_for("add_new_comment_to_question", id=id) }}"><button class="small_button">add comment</button></a><br>
         </tbody>
         </table>
+        <br><a href="{{ url_for("add_new_comment_to_question", id=id) }}"><button class="small_button">add comment</button></a><br>
+
 
         <br>
     <h2 id="AskMateHeader">Answers:</h2>
