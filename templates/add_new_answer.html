@@ -12,6 +12,9 @@
 
 </head>
 <body>
+    <div class="upper_left">
+    <a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a>
+    </div>
    <h1 id="Header2">{% for item in question %} {{ item.title }} {% endfor %}</h1>
     <br>
     <p>{% for item in question %}

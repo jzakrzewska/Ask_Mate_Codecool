@@ -9,7 +9,9 @@
 
 </head>
 <body>
-
+    <div class="upper_left">
+    <a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a>
+    </div>
     <h1 id="Header2">{% for item in question %} {{ item.title }} {% endfor %}</h1>
     <br>
     <p>{% for item in question %}
@@ -54,14 +56,15 @@
             {% endfor %}
             </tbody>
         </table>
-    <p><br><a href="{{ url_for("add_new_answer", id=id) }}"><button class="small_button">add new answer</button></a><br></p>
+    <div class="actions">
 
-    <p><br><a href="{{ url_for("edit_question", id=id) }}"><button class="small_button">edit question</button></a><br></p>
+        <a href="{{ url_for("add_new_answer", id=id) }}"><button class="small_button">add new answer</button></a>
 
+        <a href="{{ url_for("edit_question", id=id) }}"><button class="small_button">edit question</button></a>
 
+        <a href="{{ url_for("delete_a_question", id=id)}}"><button class="small_button">delete question</button></a>
 
-    <p><br><a href="{{ url_for("delete_a_question", id=id)}}"><button class="small_button">delete question</button></a><br></p>
-
-    <p><br><a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a><br></p>
+    </div>
 </body>
+
 </html>

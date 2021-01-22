@@ -91,3 +91,13 @@ p {
 .filterForm {
     float: left
 }
+
+.actions {
+    float: left;
+    display: inline;
+}
+.upper_left {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
