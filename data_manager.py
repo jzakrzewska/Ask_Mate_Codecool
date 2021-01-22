@@ -105,6 +105,18 @@ def get_answer_by_question_id(cursor: RealDictCursor, question_id) -> list:
     return cursor.fetchall()
 
 @connection.connection_handler
+def get_answer_by_id(cursor: RealDictCursor, id) -> list:
+    query = """
+        SELECT id, submission_time, vote_number, question_id, message, image
+        FROM answer
+        WHERE id = %(id)s
+        """
+    param = {'id': id}
+    cursor.execute(query, param)
+    return cursor.fetchall()
+
+
+@connection.connection_handler
 def delete_question_by_id(cursor: RealDictCursor, question_id):
 
     return cursor.execute("DELETE FROM question WHERE id = %s", (question_id,))
