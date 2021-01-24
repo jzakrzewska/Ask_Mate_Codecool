@@ -234,6 +234,7 @@ def add_comment_to_question(cursor: RealDictCursor, question_id, comment):
 
 @connection.connection_handler
 def edit_question_comment_by_id(cursor: RealDictCursor, comment, question_id):
+
     command = """
             UPDATE comment
             SET message = %(message)s, 
@@ -242,13 +243,20 @@ def edit_question_comment_by_id(cursor: RealDictCursor, comment, question_id):
     param = {"id": comment["id"],
              "message": comment["message"],
              "question_id": question_id}
-
     return cursor.execute(command, param)
 
 @connection.connection_handler
 def delete_comment_by_question_id(cursor: RealDictCursor, id, question_id):
-
-    return cursor.execute("DELETE FROM comment WHERE id = %s AND question_id = %s", (id, question_id,))
+    command = """
+    DELETE from comment
+    WHERE id = %(id)s AND question_id = %(question_id)s
+    """
+    param = {
+        "id": id,
+        "question_id": question_id
+    }
+    print(param)
+    return cursor.execute(command,param)
 
 dictionary_keys_in_memory_question = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
 dictionary_keys_in_memory_answer = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
