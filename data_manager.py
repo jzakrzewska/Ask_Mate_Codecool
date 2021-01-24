@@ -135,6 +135,8 @@ def edit_question_by_id(cursor: RealDictCursor, question):
 
 @connection.connection_handler
 def edit_answer_by_id(cursor: RealDictCursor, answer, question_id):
+
+
     command = """
             UPDATE answer
             SET message = %(message)s
@@ -143,6 +145,7 @@ def edit_answer_by_id(cursor: RealDictCursor, answer, question_id):
     param = {"id": answer["id"],
              "message": answer["message"],
              "question_id": question_id}
+
     return cursor.execute(command, param)
 
 
@@ -233,8 +236,8 @@ def add_comment_to_question(cursor: RealDictCursor, question_id, comment):
 
 
 @connection.connection_handler
-def edit_question_comment_by_id(cursor: RealDictCursor, comment, question_id):
-
+def edit_question_comment_by_id(cursor: RealDictCursor,comment, question_id):
+    print(comment, question_id)
     command = """
             UPDATE comment
             SET message = %(message)s, 
@@ -243,6 +246,7 @@ def edit_question_comment_by_id(cursor: RealDictCursor, comment, question_id):
     param = {"id": comment["id"],
              "message": comment["message"],
              "question_id": question_id}
+    print("comment", param)
     return cursor.execute(command, param)
 
 @connection.connection_handler
@@ -255,7 +259,6 @@ def delete_comment_by_question_id(cursor: RealDictCursor, id, question_id):
         "id": id,
         "question_id": question_id
     }
-    print(param)
     return cursor.execute(command,param)
 
 dictionary_keys_in_memory_question = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]

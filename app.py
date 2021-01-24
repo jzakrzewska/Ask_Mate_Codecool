@@ -215,10 +215,10 @@ def edit_question_comment(comment_id, id):
 
     if request.method == "POST":
         comment = request.form
-        print(comment["id"])
-
+        question = data_manager.get_question_by_id(id)
+        print(comment, comment["id"], comment["message"],type(comment["id"]))
         data_manager.edit_question_comment_by_id(comment, id)
-        return redirect(url_for("display_a_question", id=id, comment_id=comment_id, comment=comment))
+        return redirect(url_for("display_a_question", id=id, comment_id=comment_id, comment=comment, question=question))
 
     else:
         comment = data_manager.get_comment_by_question_id(id)[0]
@@ -230,13 +230,13 @@ def edit_question_comment(comment_id, id):
 def delete_a_question_comment(comment_id, id):
     question_dictionary_keys = data_manager.dictionary_keys_in_memory_question
     question_to_display = data_manager.get_question_by_id(id)
-    print(question_to_display)
+
     answers_dictionary_keys = data_manager.dictionary_keys_in_memory_answer
     answers = data_manager.get_answer_by_question_id(id)
-    print(answers)
+
     comments_dictionary_keys = data_manager.dictionary_keys_in_memory_comments
     question_comments = data_manager.get_comment_by_question_id(id)
-    print(question_comments)
+
     data_manager.delete_comment_by_question_id(comment_id, id)
 
 
