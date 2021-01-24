@@ -14,7 +14,7 @@
 <body>
     <div class="upper_left">
     <a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a>
-    </div>
+    </div><br>
   {% if question == None %}
       <h1 id= "Header2">Ask new question!</h1>
          <form action="{{ url_for("add_question") }}" method="post" enctype="multipart/form-data">

@@ -135,7 +135,7 @@ def add_new_answer(id):
             image_name = "images/" + image.filename
         else:
             image.filename = "no image"
-        data_manager.add_answer_by_question_id(id, answer)
+        data_manager.add_answer_by_question_id(id, answer,"/images/" + image.filename)
 
         return redirect(url_for("display_a_question",
                             answers=answers,
@@ -215,6 +215,7 @@ def edit_question_comment(comment_id, id):
 
     if request.method == "POST":
         comment = request.form
+        comment_id = request.form["id"]
         data_manager.edit_question_comment_by_id(comment, id)
         return redirect(url_for("display_a_question", id=id, comment_id=comment_id, comment=comment))
 

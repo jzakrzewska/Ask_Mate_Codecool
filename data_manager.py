@@ -62,7 +62,7 @@ def add_question(cursor: RealDictCursor, question, image_path=""):
 
 
 @connection.connection_handler
-def add_answer_by_question_id(cursor: RealDictCursor, question_id, answer):
+def add_answer_by_question_id(cursor: RealDictCursor, question_id, answer,image_path=""):
     command = """
         INSERT INTO answer (id, submission_time, vote_number, question_id, message, image)
         VALUES (DEFAULT,%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s,%(image)s)
@@ -74,7 +74,7 @@ def add_answer_by_question_id(cursor: RealDictCursor, question_id, answer):
         'vote_number': 0,
         'question_id': question_id,
         "message": answer.get("message"),
-        "image": answer.get("image.filename")
+        "image": image_path
     }
 
     cursor.execute(command, param)
@@ -242,6 +242,7 @@ def edit_question_comment_by_id(cursor: RealDictCursor, comment, question_id):
     param = {"id": comment["id"],
              "message": comment["message"],
              "question_id": question_id}
+
     return cursor.execute(command, param)
 
 @connection.connection_handler

@@ -11,7 +11,7 @@
 <body>
     <div class="upper_left">
     <a href="{{ url_for("list_questions") }}"><button class="button">Home page</button></a>
-    </div>
+    </div><br>
     <h1 id="Header2">{% for item in question %} {{ item.title }} {% endfor %}</h1>
     <br>
     <p>{% for item in question %}
@@ -73,6 +73,8 @@
                         <td>
                             {% if header == "vote_number" %}
                                 {{ answer[header] }} votes
+                            {% elif header == "image" %}
+                                <img src="../../static/{{answer[header]}}" width="40" height="25" alt="photo" title="photo" border="0">
                             {% else %}
                                 {{ answer[header] }}
                             {% endif %}
