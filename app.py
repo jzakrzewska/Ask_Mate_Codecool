@@ -45,7 +45,7 @@ def add_question():
             image.filename = "no image"
 
         data_manager.add_question(question,"/images/" + image.filename)
-        print(question)
+
         return redirect("/")
     return render_template("request_form.html", question=None)
 
@@ -216,12 +216,12 @@ def edit_question_comment(comment_id, id):
     if request.method == "POST":
         comment = request.form
         question = data_manager.get_question_by_id(id)
-        print(comment, comment["id"], comment["message"],type(comment["id"]))
+        print("comment app", comment)
         data_manager.edit_question_comment_by_id(comment)
         return redirect(url_for("display_a_question", id=id, comment_id=comment_id, comment=comment, question=question))
 
     else:
-        comment = data_manager.get_comment_by_question_id(id)[0]
+        comment = data_manager.get_comment_by_id(comment_id)[0]
         question = data_manager.get_question_by_id(id)
         return render_template("request_form_comment.html", question=question, id=id, comment=comment)
 

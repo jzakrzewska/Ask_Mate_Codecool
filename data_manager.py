@@ -215,6 +215,20 @@ def get_comment_by_question_id(cursor: RealDictCursor, question_id) -> list:
     cursor.execute(query, param)
     return cursor.fetchall()
 
+@connection.connection_handler
+def get_comment_by_id(cursor: RealDictCursor, id) -> list:
+    query = """
+    SELECT id, message, submission_time, edited_count FROM comment
+    WHERE id = %(id)s
+    """
+    param = {'id': id}
+    cursor.execute(query, param)
+    return cursor.fetchall()
+
+
+
+
+
 
 @connection.connection_handler
 def add_comment_to_question(cursor: RealDictCursor, question_id, comment):
@@ -240,11 +254,12 @@ def edit_question_comment_by_id(cursor: RealDictCursor,comment):
 
     command = """
             UPDATE comment
-            SET message = %(message)s 
+            SET message = %(message)s, edited_count = %(edited_count)s + 1
             WHERE id = %(id)s"""
 
     param = {"id": comment["id"],
-             "message": comment["message"]}
+             "message": comment["message"],
+             "edited_count": comment["edited_count"]}
 
     return cursor.execute(command, param)
 
