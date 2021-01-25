@@ -125,12 +125,13 @@ def delete_question_by_id(cursor: RealDictCursor, question_id):
 def edit_question_by_id(cursor: RealDictCursor, question):
     command = """
             UPDATE question
-            SET title = %(title)s, message = %(message)s
+            SET title = %(title)s, message = %(message)s, submission_time = %(submission_time)s
             WHERE id = %(id)s        
             """
     param = {"id": question["id"],
              "title": question["title"],
-             "message": question["message"]}
+             "message": question["message"],
+             'submission_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     return cursor.execute(command, param)
 
 @connection.connection_handler
@@ -139,12 +140,13 @@ def edit_answer_by_id(cursor: RealDictCursor, answer, question_id):
 
     command = """
             UPDATE answer
-            SET message = %(message)s
+            SET message = %(message)s, submission_time = %(submission_time)s
             WHERE id = %(id)s  AND question_id = %(question_id)s     
             """
     param = {"id": answer["id"],
              "message": answer["message"],
-             "question_id": question_id}
+             "question_id": question_id,
+             'submission_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
     return cursor.execute(command, param)
 
@@ -254,12 +256,13 @@ def edit_question_comment_by_id(cursor: RealDictCursor,comment):
 
     command = """
             UPDATE comment
-            SET message = %(message)s, edited_count = %(edited_count)s + 1
+            SET message = %(message)s, edited_count = %(edited_count)s + 1, submission_time = %(submission_time)s
             WHERE id = %(id)s"""
 
     param = {"id": comment["id"],
              "message": comment["message"],
-             "edited_count": comment["edited_count"]}
+             "edited_count": comment["edited_count"],
+             'submission_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
     return cursor.execute(command, param)
 
