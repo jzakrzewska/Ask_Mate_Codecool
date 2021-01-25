@@ -217,7 +217,7 @@ def edit_question_comment(comment_id, id):
         comment = request.form
         question = data_manager.get_question_by_id(id)
         print(comment, comment["id"], comment["message"],type(comment["id"]))
-        data_manager.edit_question_comment_by_id(comment, id)
+        data_manager.edit_question_comment_by_id(comment)
         return redirect(url_for("display_a_question", id=id, comment_id=comment_id, comment=comment, question=question))
 
     else:

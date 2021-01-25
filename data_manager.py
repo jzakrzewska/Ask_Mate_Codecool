@@ -236,17 +236,16 @@ def add_comment_to_question(cursor: RealDictCursor, question_id, comment):
 
 
 @connection.connection_handler
-def edit_question_comment_by_id(cursor: RealDictCursor,comment, question_id):
-    print(comment, question_id)
+def edit_question_comment_by_id(cursor: RealDictCursor,comment):
+
     command = """
             UPDATE comment
-            SET message = %(message)s, 
-            WHERE id = %(id)s  AND question_id = %(question_id)s     
-            """
+            SET message = %(message)s 
+            WHERE id = %(id)s"""
+
     param = {"id": comment["id"],
-             "message": comment["message"],
-             "question_id": question_id}
-    print("comment", param)
+             "message": comment["message"]}
+
     return cursor.execute(command, param)
 
 @connection.connection_handler
